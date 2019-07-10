@@ -1,0 +1,597 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7474852222D3B0B600C0916F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7474852122D3B0B600C0916F /* AppDelegate.swift */; };
+		7474852722D3B0B600C0916F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7474852522D3B0B600C0916F /* Main.storyboard */; };
+		7474852922D3B0B700C0916F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7474852822D3B0B700C0916F /* Assets.xcassets */; };
+		7474852C22D3B0B700C0916F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7474852A22D3B0B700C0916F /* LaunchScreen.storyboard */; };
+		7474853722D3B0B700C0916F /* SweaftherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7474853622D3B0B700C0916F /* SweaftherTests.swift */; };
+		7474854222D3B0B700C0916F /* SweaftherUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7474854122D3B0B700C0916F /* SweaftherUITests.swift */; };
+		7474855022D3B27300C0916F /* WeatherTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7474854F22D3B27300C0916F /* WeatherTableViewController.swift */; };
+		7474855222D3B3FC00C0916F /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7474855122D3B3FC00C0916F /* Weather.swift */; };
+		74B5294322D4D86100A78302 /* CityTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B5294222D4D86100A78302 /* CityTableViewController.swift */; };
+		74B5294522D4D96D00A78302 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B5294422D4D96D00A78302 /* City.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7474853322D3B0B700C0916F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7474851622D3B0B600C0916F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7474851D22D3B0B600C0916F;
+			remoteInfo = Sweafther;
+		};
+		7474853E22D3B0B700C0916F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7474851622D3B0B600C0916F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7474851D22D3B0B600C0916F;
+			remoteInfo = Sweafther;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		7474851E22D3B0B600C0916F /* Sweafther.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sweafther.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7474852122D3B0B600C0916F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		7474852622D3B0B600C0916F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		7474852822D3B0B700C0916F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		7474852B22D3B0B700C0916F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		7474852D22D3B0B700C0916F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7474853222D3B0B700C0916F /* SweaftherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SweaftherTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7474853622D3B0B700C0916F /* SweaftherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SweaftherTests.swift; sourceTree = "<group>"; };
+		7474853822D3B0B700C0916F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7474853D22D3B0B700C0916F /* SweaftherUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SweaftherUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7474854122D3B0B700C0916F /* SweaftherUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SweaftherUITests.swift; sourceTree = "<group>"; };
+		7474854322D3B0B700C0916F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7474854F22D3B27300C0916F /* WeatherTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherTableViewController.swift; sourceTree = "<group>"; };
+		7474855122D3B3FC00C0916F /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
+		74B5294222D4D86100A78302 /* CityTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityTableViewController.swift; sourceTree = "<group>"; };
+		74B5294422D4D96D00A78302 /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7474851B22D3B0B600C0916F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7474852F22D3B0B700C0916F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7474853A22D3B0B700C0916F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7474851522D3B0B600C0916F = {
+			isa = PBXGroup;
+			children = (
+				7474852022D3B0B600C0916F /* Sweafther */,
+				7474853522D3B0B700C0916F /* SweaftherTests */,
+				7474854022D3B0B700C0916F /* SweaftherUITests */,
+				7474851F22D3B0B600C0916F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		7474851F22D3B0B600C0916F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7474851E22D3B0B600C0916F /* Sweafther.app */,
+				7474853222D3B0B700C0916F /* SweaftherTests.xctest */,
+				7474853D22D3B0B700C0916F /* SweaftherUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7474852022D3B0B600C0916F /* Sweafther */ = {
+			isa = PBXGroup;
+			children = (
+				7474854F22D3B27300C0916F /* WeatherTableViewController.swift */,
+				7474852122D3B0B600C0916F /* AppDelegate.swift */,
+				7474852522D3B0B600C0916F /* Main.storyboard */,
+				74B5294222D4D86100A78302 /* CityTableViewController.swift */,
+				7474852822D3B0B700C0916F /* Assets.xcassets */,
+				7474852A22D3B0B700C0916F /* LaunchScreen.storyboard */,
+				7474852D22D3B0B700C0916F /* Info.plist */,
+				7474855122D3B3FC00C0916F /* Weather.swift */,
+				74B5294422D4D96D00A78302 /* City.swift */,
+			);
+			path = Sweafther;
+			sourceTree = "<group>";
+		};
+		7474853522D3B0B700C0916F /* SweaftherTests */ = {
+			isa = PBXGroup;
+			children = (
+				7474853622D3B0B700C0916F /* SweaftherTests.swift */,
+				7474853822D3B0B700C0916F /* Info.plist */,
+			);
+			path = SweaftherTests;
+			sourceTree = "<group>";
+		};
+		7474854022D3B0B700C0916F /* SweaftherUITests */ = {
+			isa = PBXGroup;
+			children = (
+				7474854122D3B0B700C0916F /* SweaftherUITests.swift */,
+				7474854322D3B0B700C0916F /* Info.plist */,
+			);
+			path = SweaftherUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		7474851D22D3B0B600C0916F /* Sweafther */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7474854622D3B0B700C0916F /* Build configuration list for PBXNativeTarget "Sweafther" */;
+			buildPhases = (
+				7474851A22D3B0B600C0916F /* Sources */,
+				7474851B22D3B0B600C0916F /* Frameworks */,
+				7474851C22D3B0B600C0916F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Sweafther;
+			productName = Sweafther;
+			productReference = 7474851E22D3B0B600C0916F /* Sweafther.app */;
+			productType = "com.apple.product-type.application";
+		};
+		7474853122D3B0B700C0916F /* SweaftherTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7474854922D3B0B700C0916F /* Build configuration list for PBXNativeTarget "SweaftherTests" */;
+			buildPhases = (
+				7474852E22D3B0B700C0916F /* Sources */,
+				7474852F22D3B0B700C0916F /* Frameworks */,
+				7474853022D3B0B700C0916F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7474853422D3B0B700C0916F /* PBXTargetDependency */,
+			);
+			name = SweaftherTests;
+			productName = SweaftherTests;
+			productReference = 7474853222D3B0B700C0916F /* SweaftherTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		7474853C22D3B0B700C0916F /* SweaftherUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7474854C22D3B0B700C0916F /* Build configuration list for PBXNativeTarget "SweaftherUITests" */;
+			buildPhases = (
+				7474853922D3B0B700C0916F /* Sources */,
+				7474853A22D3B0B700C0916F /* Frameworks */,
+				7474853B22D3B0B700C0916F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7474853F22D3B0B700C0916F /* PBXTargetDependency */,
+			);
+			name = SweaftherUITests;
+			productName = SweaftherUITests;
+			productReference = 7474853D22D3B0B700C0916F /* SweaftherUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7474851622D3B0B600C0916F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1020;
+				LastUpgradeCheck = 1020;
+				ORGANIZATIONNAME = niewia_a;
+				TargetAttributes = {
+					7474851D22D3B0B600C0916F = {
+						CreatedOnToolsVersion = 10.2.1;
+					};
+					7474853122D3B0B700C0916F = {
+						CreatedOnToolsVersion = 10.2.1;
+						TestTargetID = 7474851D22D3B0B600C0916F;
+					};
+					7474853C22D3B0B700C0916F = {
+						CreatedOnToolsVersion = 10.2.1;
+						TestTargetID = 7474851D22D3B0B600C0916F;
+					};
+				};
+			};
+			buildConfigurationList = 7474851922D3B0B600C0916F /* Build configuration list for PBXProject "Sweafther" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 7474851522D3B0B600C0916F;
+			productRefGroup = 7474851F22D3B0B600C0916F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7474851D22D3B0B600C0916F /* Sweafther */,
+				7474853122D3B0B700C0916F /* SweaftherTests */,
+				7474853C22D3B0B700C0916F /* SweaftherUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7474851C22D3B0B600C0916F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7474852C22D3B0B700C0916F /* LaunchScreen.storyboard in Resources */,
+				7474852922D3B0B700C0916F /* Assets.xcassets in Resources */,
+				7474852722D3B0B600C0916F /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7474853022D3B0B700C0916F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7474853B22D3B0B700C0916F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7474851A22D3B0B600C0916F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				74B5294322D4D86100A78302 /* CityTableViewController.swift in Sources */,
+				74B5294522D4D96D00A78302 /* City.swift in Sources */,
+				7474855022D3B27300C0916F /* WeatherTableViewController.swift in Sources */,
+				7474855222D3B3FC00C0916F /* Weather.swift in Sources */,
+				7474852222D3B0B600C0916F /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7474852E22D3B0B700C0916F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7474853722D3B0B700C0916F /* SweaftherTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7474853922D3B0B700C0916F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7474854222D3B0B700C0916F /* SweaftherUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7474853422D3B0B700C0916F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7474851D22D3B0B600C0916F /* Sweafther */;
+			targetProxy = 7474853322D3B0B700C0916F /* PBXContainerItemProxy */;
+		};
+		7474853F22D3B0B700C0916F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7474851D22D3B0B600C0916F /* Sweafther */;
+			targetProxy = 7474853E22D3B0B700C0916F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		7474852522D3B0B600C0916F /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7474852622D3B0B600C0916F /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		7474852A22D3B0B700C0916F /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7474852B22D3B0B700C0916F /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		7474854422D3B0B700C0916F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		7474854522D3B0B700C0916F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		7474854722D3B0B700C0916F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = Sweafther/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.etna.Sweafther;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		7474854822D3B0B700C0916F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = Sweafther/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.etna.Sweafther;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		7474854A22D3B0B700C0916F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = SweaftherTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.etna.SweaftherTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Sweafther.app/Sweafther";
+			};
+			name = Debug;
+		};
+		7474854B22D3B0B700C0916F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = SweaftherTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.etna.SweaftherTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Sweafther.app/Sweafther";
+			};
+			name = Release;
+		};
+		7474854D22D3B0B700C0916F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = SweaftherUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.etna.SweaftherUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Sweafther;
+			};
+			name = Debug;
+		};
+		7474854E22D3B0B700C0916F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = SweaftherUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.etna.SweaftherUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Sweafther;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7474851922D3B0B600C0916F /* Build configuration list for PBXProject "Sweafther" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7474854422D3B0B700C0916F /* Debug */,
+				7474854522D3B0B700C0916F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7474854622D3B0B700C0916F /* Build configuration list for PBXNativeTarget "Sweafther" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7474854722D3B0B700C0916F /* Debug */,
+				7474854822D3B0B700C0916F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7474854922D3B0B700C0916F /* Build configuration list for PBXNativeTarget "SweaftherTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7474854A22D3B0B700C0916F /* Debug */,
+				7474854B22D3B0B700C0916F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7474854C22D3B0B700C0916F /* Build configuration list for PBXNativeTarget "SweaftherUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7474854D22D3B0B700C0916F /* Debug */,
+				7474854E22D3B0B700C0916F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 7474851622D3B0B600C0916F /* Project object */;
+}
