@@ -18,12 +18,7 @@ class City {
     
     //MARK: Initialization
     
-    init?(name: String, temperature: Double) {
-        
-        if name.isEmpty {
-            return nil
-        }
-        
+    init(name: String, temperature: Double) {
         self.name = name
         self.temperature = temperature
     }

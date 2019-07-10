@@ -8,12 +8,13 @@
 
 import UIKit
 
+
 class CityTableViewController: UITableViewController {
     
     //MARK: Properties
     
     var cities = [City]()
-
+//    var city: City?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,20 +26,11 @@ class CityTableViewController: UITableViewController {
     
     private func loadSampleCities() {
         
-        guard let city1 = City(name: "Paris", temperature: 27) else {
-            fatalError("Unable to instantiate city1")
-        }
-        
-        guard let city2 = City(name: "New York", temperature: 33) else {
-            fatalError("Unable to instantiate city2")
-        }
-        
-        guard let city3 = City(name: "London", temperature: 25) else {
-            fatalError("Unable to instantiate city3")
-        }
+        let city1 = City(name: "Paris", temperature: 27)
+        let city2 = City(name: "New York", temperature: 33)
+        let city3 = City(name: "London", temperature: 25)
         
         cities += [city1, city2, city3]
-        
     }
     
 
@@ -103,14 +95,26 @@ class CityTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if let viewController = segue.destination as? SearchCityViewController {
+            viewController.delegate = self
+        }
     }
-    */
+    
 
+}
+
+extension CityTableViewController: SearchCityTableViewDelegate {
+    func didSelectedNewCity(_ newCity: String) {
+//        print(newCity)
+        let newCity = City(name: newCity, temperature: 12)
+        
+        cities.append(newCity)
+        tableView.reloadData()
+        navigationController?.popViewController(animated: true)
+    }
 }
