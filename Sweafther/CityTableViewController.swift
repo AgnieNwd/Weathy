@@ -7,20 +7,28 @@
 //
 
 import UIKit
-
+import os.log
 
 class CityTableViewController: UITableViewController {
     
     //MARK: Properties
     
     var cities = [City]()
-//    var city: City?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        loadSampleCities()
+        navigationItem.leftBarButtonItem = editButtonItem
+
+        // Load any saved cities, otherwise load sample data.
+        if let savedCities = loadCities() {
+            cities += savedCities
+        }
+        else {
+            loadSampleCities()
+        }
     }
+    
     
     //MARK: Private Methods
     
@@ -33,7 +41,21 @@ class CityTableViewController: UITableViewController {
         cities += [city1, city2, city3]
     }
     
+    private func saveCities() {
+        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(cities, toFile: City.ArchiveURL.path)
+        
+        if isSuccessfulSave {
+            os_log("Cities successfully saved.", log: OSLog.default, type: .debug)
+        } else {
+            os_log("Cities to save cities...", log: OSLog.default, type: .error)
+        }
+    }
+    
+    private func loadCities() -> [City]? {
+        return NSKeyedUnarchiver.unarchiveObject(withFile: City.ArchiveURL.path) as? [City]
 
+    }
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -60,25 +82,26 @@ class CityTableViewController: UITableViewController {
     }
  
 
-    /*
+    
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
         return true
     }
-    */
-
-    /*
+    
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
+            cities.remove(at: indexPath.row)
+            saveCities()
             tableView.deleteRows(at: [indexPath], with: .fade)
+
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
-    */
+    
 
     /*
     // Override to support rearranging the table view.
@@ -116,5 +139,7 @@ extension CityTableViewController: SearchCityTableViewDelegate {
         cities.append(newCity)
         tableView.reloadData()
         navigationController?.popViewController(animated: true)
+        
+        saveCities()
     }
 }
