@@ -16,7 +16,7 @@ class CityTableViewController: UITableViewController {
     //MARK: Properties
     
     var cities = [City]()
-    var CurrentlyData = [String]()
+    var CurrentlyData = [String : Any]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,9 +36,9 @@ class CityTableViewController: UITableViewController {
     
     private func loadSampleCities() {
         
-        let city1 = City(name: "Paris", temperature: 27)
-        let city2 = City(name: "New York", temperature: 33)
-        let city3 = City(name: "London", temperature: 25)
+        let city1 = City(name: "Paris", temperature: "27")
+        let city2 = City(name: "New York", temperature: "33")
+        let city3 = City(name: "London", temperature: "25")
         
         cities += [city1, city2, city3]
     }
@@ -78,7 +78,7 @@ class CityTableViewController: UITableViewController {
         let cityObject = cities[indexPath.row]
         
         cell.textLabel?.text = cityObject.name
-        cell.detailTextLabel?.text = "\(Int(cityObject.temperature)) °C"
+        cell.detailTextLabel?.text = "\(cityObject.temperature) °C"
         
         return cell
     }
@@ -124,7 +124,7 @@ class CityTableViewController: UITableViewController {
             if error == nil {
                 if let location = placemarks?.first?.location {
                     //Weather.forecast(withLocation: location.coordinate, completion: { (results:[Weather]?) in
-                    Weather.getCurrentl(withLocation: location.coordinate, completion: { (results:[String]?) in
+                    Weather.getCurrentl(withLocation: location.coordinate, completion: { (results:[String : Any]?) in
                         
                         
                         // check if weather is here
@@ -157,9 +157,9 @@ class CityTableViewController: UITableViewController {
 extension CityTableViewController: SearchCityTableViewDelegate {
     func didSelectedNewCity(_ newCity: String) {
 //        print(newCity)
-        updateWeatherForLocation(location: "Paris")
+        updateWeatherForLocation(location: newCity)
         print("le forcast de city table\(CurrentlyData)")
-        let newCity = City(name: newCity, temperature: 12)
+        let newCity = City(name: newCity, temperature: "12")
         
         cities.append(newCity)
         tableView.reloadData()

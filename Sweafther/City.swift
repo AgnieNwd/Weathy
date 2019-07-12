@@ -13,7 +13,7 @@ class City: NSObject, NSCoding {
     
     //MARK: Properties
     var name: String
-    let temperature: Double
+    let temperature: String
 
     
     //MARK: Archiving Paths
@@ -22,7 +22,7 @@ class City: NSObject, NSCoding {
 
     
     //MARK: Initialization
-    init(name: String, temperature: Double) {
+    init(name: String, temperature: String) {
         self.name = name
         self.temperature = temperature
     }
@@ -43,11 +43,16 @@ class City: NSObject, NSCoding {
         
         // The name is required. If we cannot decode a name string, the initializer should fail.
         guard let name = aDecoder.decodeObject(forKey: PropertyKey.name) as? String else {
-            os_log("Unable to decode the name for a Meal object.", log: OSLog.default, type: .debug)
+            os_log("Unable to decode the name for a City object.", log: OSLog.default, type: .debug)
             return nil
         }
         
-        let temperature = aDecoder.decodeDouble(forKey: PropertyKey.temperature)
+        guard let temperature = aDecoder.decodeObject(forKey: PropertyKey.temperature) as? String else {
+            os_log("Unable to decode the temperature for a City object.", log: OSLog.default, type: .debug)
+            return nil
+        }
+        
+//        let temperature = aDecoder.decodeString(forKey: PropertyKey.temperature)
         
         // Must call designated initializer.
         self.init(name: name, temperature: temperature)
