@@ -8,18 +8,20 @@
 
 import UIKit
 import os.log
+import CoreLocation
+
 
 class CityTableViewController: UITableViewController {
     
     //MARK: Properties
     
     var cities = [City]()
+    var CurrentlyData = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         navigationItem.leftBarButtonItem = editButtonItem
-
         // Load any saved cities, otherwise load sample data.
         if let savedCities = loadCities() {
             cities += savedCities
@@ -62,7 +64,7 @@ class CityTableViewController: UITableViewController {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return cities.count
@@ -117,7 +119,29 @@ class CityTableViewController: UITableViewController {
         return true
     }
     */
-
+    func updateWeatherForLocation(location:String) {
+        CLGeocoder().geocodeAddressString(location) { (placemarks:[CLPlacemark]?, error:Error?) in
+            if error == nil {
+                if let location = placemarks?.first?.location {
+                    //Weather.forecast(withLocation: location.coordinate, completion: { (results:[Weather]?) in
+                    Weather.getCurrentl(withLocation: location.coordinate, completion: { (results:[String]?) in
+                        
+                        
+                        // check if weather is here
+                        if let weatherData = results {
+                            self.CurrentlyData = weatherData
+                            
+                            DispatchQueue.main.async {
+                                self.tableView.reloadData()
+                            }
+                            
+                        }
+                        
+                    })
+                }
+            }
+        }
+    }
     
     // MARK: - Navigation
 
@@ -127,13 +151,14 @@ class CityTableViewController: UITableViewController {
             viewController.delegate = self
         }
     }
-    
 
 }
 
 extension CityTableViewController: SearchCityTableViewDelegate {
     func didSelectedNewCity(_ newCity: String) {
 //        print(newCity)
+        updateWeatherForLocation(location: "Paris")
+        print("le forcast de city table\(CurrentlyData)")
         let newCity = City(name: newCity, temperature: 12)
         
         cities.append(newCity)

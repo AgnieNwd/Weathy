@@ -84,15 +84,51 @@ struct Weather {
         
         task.resume()
         
-        
-        
-        
-        
-        
-        
-        
-        
     }
     
+    static func getCurrentl(withLocation location:CLLocationCoordinate2D, completion: @escaping ([String]?) -> ()) {
+        let url = basePath + "\(location.latitude),\(location.longitude)?lang=en&units=si"
+        let request = URLRequest(url: URL(string: url)!)
+        print(url)
+        
+        let task = URLSession.shared.dataTask(with: request) { (data:Data?, response:URLResponse?, error:Error?) in
+            
+            var forecastCurrent = [String:Any]()
+            
+            if let data = data {
+                
+                do {
+                    if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String:Any] {
+                        //print("json<<<<\(json)")
+                        
+                        if let currentlyForecasts = json["currently"] as? [String:Any] {
+                            print("currentlyForecasts<<<<\(currentlyForecasts)")
+                            
+                            //for Cuurent in currentlyForecasts
+                            forecastCurrent = [
+                                "time" : currentlyForecasts["time"]!,
+                                "temperature" : currentlyForecasts["temperature"]!,
+                                "icon" : currentlyForecasts["icon"]!
+                            ]
+                            
+                            print("forecastCurrent<<<<\(forecastCurrent)")
+                            
+                            
+                        }
+                        
+                    }
+                }catch {
+                    print(error.localizedDescription)
+                }
+                
+                completion(forecastCurrent)
+                
+            }
+            
+            
+        }
+        
+        task.resume()
+    }
     
 }
