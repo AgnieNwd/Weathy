@@ -119,24 +119,21 @@ class CityTableViewController: UITableViewController {
         return true
     }
     */
-    func updateWeatherForLocation(location:String) {
+    func updateWeatherForLocation(location:String, completion: @escaping () -> ()) {
         CLGeocoder().geocodeAddressString(location) { (placemarks:[CLPlacemark]?, error:Error?) in
             if error == nil {
                 if let location = placemarks?.first?.location {
                     //Weather.forecast(withLocation: location.coordinate, completion: { (results:[Weather]?) in
                     Weather.getCurrentl(withLocation: location.coordinate, completion: { (results:[String : Any]?) in
                         
-                        
                         // check if weather is here
                         if let weatherData = results {
                             self.CurrentlyData = weatherData
                             
                             DispatchQueue.main.async {
-                                self.tableView.reloadData()
+                                completion()
                             }
-                            
                         }
-                        
                     })
                 }
             }
@@ -157,14 +154,16 @@ class CityTableViewController: UITableViewController {
 extension CityTableViewController: SearchCityTableViewDelegate {
     func didSelectedNewCity(_ newCity: String) {
 //        print(newCity)
-        updateWeatherForLocation(location: newCity)
-        print("le forcast de city table\(CurrentlyData)")
-        let newCity = City(name: newCity, temperature: "12")
-        
-        cities.append(newCity)
-        tableView.reloadData()
-        navigationController?.popViewController(animated: true)
-        
-        saveCities()
+        updateWeatherForLocation(location: newCity, completion: {
+            print("le forcast de city table\(self.CurrentlyData)")
+            let temperature = "\(self.CurrentlyData["temperature"] as? Double ?? -1.0)"
+            let newCity = City(name: newCity, temperature: temperature)
+            
+            self.cities.append(newCity)
+            self.tableView.reloadData()
+            self.navigationController?.popViewController(animated: true)
+            
+            self.saveCities()
+        })
     }
 }

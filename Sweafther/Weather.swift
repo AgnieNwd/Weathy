@@ -117,7 +117,7 @@ struct Weather {
                         }
                         
                     }
-                }catch {
+                } catch {
                     print(error.localizedDescription)
                 }
                 
