@@ -15,7 +15,6 @@ protocol SearchCityTableViewDelegate: AnyObject {
 
 class SearchCityViewController: UIViewController {
 
-
     let cityService = CityService()
     
     var cityNameArr = [String]()

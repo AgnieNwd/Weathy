@@ -51,16 +51,16 @@ struct Weather {
                 
                 do {
                     if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String:Any] {
-                        print("json<<<<\(json)")
+//                        print("json<<<<\(json)")
 
                         if let dailyForecasts = json["daily"] as? [String:Any] {
-                            print("dailyForecasts<<<<\(dailyForecasts)")
+//                            print("dailyForecasts<<<<\(dailyForecasts)")
                             if let dailyData = dailyForecasts["data"] as? [[String:Any]] {
-                                print("dailyData<<<<\(dailyData)")
+//                                print("dailyData<<<<\(dailyData)")
 
                                 for dataPoint in dailyData {
                                     if let weatherObject = try? Weather(json: dataPoint) {
-                                        print("weatherObject<<<<\(weatherObject)")
+//                                        print("weatherObject<<<<\(weatherObject)")
 
                                         forecastArray.append(weatherObject)
                                     }
