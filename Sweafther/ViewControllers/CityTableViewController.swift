@@ -78,7 +78,7 @@ class CityTableViewController: UITableViewController {
         let cityObject = cities[indexPath.row]
         
         cell.textLabel?.text = cityObject.name
-        cell.detailTextLabel?.text = "\(cityObject.temperature) \(degrePref)"
+        cell.detailTextLabel?.text = "\((cityObject.temperature as NSString).integerValue) \(degrePref)"
         
         return cell
     }
@@ -152,36 +152,50 @@ class CityTableViewController: UITableViewController {
             sender.setTitle("°C", for: [])
             degrePref = "°F"
         }
-        reloadDataTemp(completion: {
-            self.tableView.reloadData()
-        })
+        reloadDataTemp()
     }
     
-    func reloadDataTemp(completion: @escaping() -> ()) {
+    
+    func reloadDataTemp() {
+        var i = 0
         for city in cities{
             updateWeatherForLocation(location: city.name, completion: {
-                city.temperature = "\(self.CurrentlyData["temperature"] as? Double ?? -1.0)"
+                city.temperature = "\(Int(self.CurrentlyData["temperature"] as? Double ?? -1.0))"
+                if self.cities.count - 1 == i
+                {
+                    self.tableView.reloadData()
+                }
+                i = i + 1
             })
-            DispatchQueue.main.async {
-                completion()
+        }
+    }
+    func checkCities(newCity: String)->Bool {
+        for city in cities {
+            if city.name == newCity {
+                return true
             }
         }
+        return false
     }
 }
 
 extension CityTableViewController: SearchCityTableViewDelegate {
     func didSelectedNewCity(_ newCity: String) {
 //        print(newCity)
-        updateWeatherForLocation(location: newCity, completion: {
-            print("le forcast de city table\(self.CurrentlyData)")
-            let temperature = "\(self.CurrentlyData["temperature"] as? Double ?? -1.0)"
-            let newCity = City(name: newCity, temperature: temperature)
-            
-            self.cities.append(newCity)
-            self.tableView.reloadData()
-            self.navigationController?.popViewController(animated: true)
-            
-            self.saveCities()
-        })
+        var ifCtity = checkCities(newCity: newCity)
+        if !ifCtity {
+            updateWeatherForLocation(location: newCity, completion: {
+                print("le forcast de city table\(self.CurrentlyData)")
+                let temperature = "\(Int(self.CurrentlyData["temperature"] as? Double ?? -1.0))"
+                let newCity = City(name: newCity, temperature: temperature)
+                
+                self.cities.append(newCity)
+                self.tableView.reloadData()
+                //self.navigationController?.popViewController(animated: true)
+                
+                self.saveCities()
+            })
+        }
+        self.navigationController?.popViewController(animated: true)
     }
 }
