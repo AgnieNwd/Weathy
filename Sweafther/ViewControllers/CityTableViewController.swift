@@ -17,10 +17,10 @@ class CityTableViewController: UITableViewController {
     
     var cities = [City]()
     var CurrentlyData = [String : Any]()
-    
+    var degrePref = String()
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        degrePref = "°C"
         navigationItem.leftBarButtonItem = editButtonItem
         // Load any saved cities, otherwise load sample data.
         if let savedCities = loadCities() {
@@ -73,12 +73,12 @@ class CityTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell City", for: indexPath)
-
+        
         // Configure the cell...
         let cityObject = cities[indexPath.row]
         
         cell.textLabel?.text = cityObject.name
-        cell.detailTextLabel?.text = "\(cityObject.temperature) °C"
+        cell.detailTextLabel?.text = "\(cityObject.temperature) \(degrePref)"
         
         return cell
     }
@@ -118,7 +118,7 @@ class CityTableViewController: UITableViewController {
             if error == nil {
                 if let location = placemarks?.first?.location {
                     //Weather.forecast(withLocation: location.coordinate, completion: { (results:[Weather]?) in
-                    Weather.getCurrentl(withLocation: location.coordinate, completion: { (results:[String : Any]?) in
+                    Weather.getCurrentl(typeTemp: self.degrePref, withLocation: location.coordinate, completion: { (results:[String : Any]?) in
                         
                         // check if weather is here
                         if let weatherData = results {
@@ -143,6 +143,30 @@ class CityTableViewController: UITableViewController {
         }
     }
 
+    @IBAction func typeOfTemp(_ sender: UIButton) {
+        if degrePref == "°F" {
+            sender.setTitle("°F", for: [])
+            degrePref = "°C"
+        }
+        else {
+            sender.setTitle("°C", for: [])
+            degrePref = "°F"
+        }
+        reloadDataTemp(completion: {
+            self.tableView.reloadData()
+        })
+    }
+    
+    func reloadDataTemp(completion: @escaping() -> ()) {
+        for city in cities{
+            updateWeatherForLocation(location: city.name, completion: {
+                city.temperature = "\(self.CurrentlyData["temperature"] as? Double ?? -1.0)"
+            })
+            DispatchQueue.main.async {
+                completion()
+            }
+        }
+    }
 }
 
 extension CityTableViewController: SearchCityTableViewDelegate {

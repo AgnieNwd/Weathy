@@ -13,7 +13,7 @@ class City: NSObject, NSCoding {
     
     //MARK: Properties
     var name: String
-    let temperature: String
+    var temperature: String
 
     
     //MARK: Archiving Paths

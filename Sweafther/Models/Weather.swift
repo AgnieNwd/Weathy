@@ -86,8 +86,11 @@ struct Weather {
         
     }
     
-    static func getCurrentl(withLocation location:CLLocationCoordinate2D, completion: @escaping ([String : Any]?) -> ()) {
-        let url = basePath + "\(location.latitude),\(location.longitude)?lang=en&units=si"
+    static func getCurrentl(typeTemp: String, withLocation location:CLLocationCoordinate2D, completion: @escaping ([String : Any]?) -> ()) {
+        var url = basePath + "\(location.latitude),\(location.longitude)?lang=en"
+        if typeTemp == "°C" {
+            url = url + "&units=si"
+        }
         let request = URLRequest(url: URL(string: url)!)
         print(url)
         

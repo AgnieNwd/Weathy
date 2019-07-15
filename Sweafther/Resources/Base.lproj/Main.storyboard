@@ -98,6 +98,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.78039199999999997" green="0.85882400000000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <button key="tableFooterView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ugh-qE-0mq">
+                            <rect key="frame" x="0.0" y="118" width="375" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="°F"/>
+                            <connections>
+                                <action selector="typeOfTemp:" destination="wjN-7C-8ay" eventType="touchUpInside" id="QHo-wR-zWl"/>
+                            </connections>
+                        </button>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell City" textLabel="Wb6-9p-5IR" detailTextLabel="7tQ-4L-9Mm" style="IBUITableViewCellStyleValue1" id="3wU-H9-G4f">
                                 <rect key="frame" x="0.0" y="28" width="375" height="90"/>
