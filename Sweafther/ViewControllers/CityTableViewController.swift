@@ -18,10 +18,13 @@ class CityTableViewController: UITableViewController {
     var cities = [City]()
     var CurrentlyData = [String : Any]()
     var degrePref = String()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         degrePref = "°C"
         navigationItem.leftBarButtonItem = editButtonItem
+        
         // Load any saved cities, otherwise load sample data.
         if let savedCities = loadCities() {
             cities += savedCities
@@ -29,6 +32,7 @@ class CityTableViewController: UITableViewController {
         else {
             loadSampleCities()
         }
+        
         reloadDataTemp()
     }
     
@@ -56,7 +60,6 @@ class CityTableViewController: UITableViewController {
     
     private func loadCities() -> [City]? {
         return NSKeyedUnarchiver.unarchiveObject(withFile: City.ArchiveURL.path) as? [City]
-
     }
     
     // MARK: - Table view data source
@@ -77,11 +80,11 @@ class CityTableViewController: UITableViewController {
         
         // Configure the cell...
         let cityObject = cities[indexPath.row]
-        print("cityObject  \(cities[indexPath.row])")
 
-        cell.imageView?.image = UIImage(named: cityObject.icon)
         cell.textLabel?.text = cityObject.name
         cell.detailTextLabel?.text = "\((cityObject.temperature as NSString).integerValue) \(degrePref)"
+        cell.imageView?.image = UIImage.scaleImageToSize(img: UIImage(named: cityObject.icon)!, size: CGSize(width: 40.0, height: 40.0))
+
         return cell
     }
  
@@ -109,7 +112,7 @@ class CityTableViewController: UITableViewController {
     // MARK: - UITableViewDelegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("selected city \(cities[indexPath.row].name)")
+//        print("selected city \(cities[indexPath.row].name)")
         
         let selectedCityName = cities[indexPath.row].name
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -148,6 +151,9 @@ class CityTableViewController: UITableViewController {
             viewController.delegate = self
         }
     }
+    
+    
+    // MARK: - Action
 
     @IBAction func typeOfTemp(_ sender: UIButton) {
         if degrePref == "°F" {
@@ -206,4 +212,21 @@ extension CityTableViewController: SearchCityTableViewDelegate {
         }
         self.navigationController?.popViewController(animated: true)
     }
+}
+
+
+extension UIImage {
+    
+    class func scaleImageToSize(img: UIImage, size: CGSize) -> UIImage {
+        UIGraphicsBeginImageContext(size)
+        
+        img.draw(in: CGRect(origin: CGPoint.zero, size: size))
+        
+        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
+        
+        UIGraphicsEndImageContext()
+        
+        return scaledImage!
+    }
+    
 }

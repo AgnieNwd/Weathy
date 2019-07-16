@@ -23,20 +23,12 @@ class WeatherTableViewController: UIViewController, UISearchBarDelegate, UITable
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("citttttttttty issssss \(city)")
         closeButton.setTitle("Close", for: .normal)
         titleLabel.text = city
         updateWeatherForLocation(location: city)
     }
     
     //MARK: Actions
-
-//    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-//        searchBar.resignFirstResponder()
-//        if let locationString = searchBar.text, !locationString.isEmpty {
-//            updateWeatherForLocation(location: locationString)
-//        }
-//    }
     
     func updateWeatherForLocation(location:String) {
         CLGeocoder().geocodeAddressString(location) { (placemarks:[CLPlacemark]?, error:Error?) in
@@ -81,6 +73,18 @@ class WeatherTableViewController: UIViewController, UISearchBarDelegate, UITable
         
         return dateFormatter.string(from: date!)
     }
+    
+//    func scaleImageToSize(img: UIImage, size: CGSize) -> UIImage {
+//        UIGraphicsBeginImageContext(size)
+//
+//        img.draw(in: CGRect(origin: CGPoint.zero, size: size))
+//
+//        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
+//
+//        UIGraphicsEndImageContext()
+//
+//        return scaledImage!
+//    }
 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -90,7 +94,7 @@ class WeatherTableViewController: UIViewController, UISearchBarDelegate, UITable
         
         cell.textLabel?.text = weatherObject.summary
         cell.detailTextLabel?.text = "\(Int(weatherObject.temperature)) °C"
-        cell.imageView?.image = UIImage(named: weatherObject.icon)
+        cell.imageView?.image = UIImage.scaleImageToSize(img: UIImage(named: weatherObject.icon)!, size: CGSize(width: 35.0, height: 35.0))
         
         return cell
     }

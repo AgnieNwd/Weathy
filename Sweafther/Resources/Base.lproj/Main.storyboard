@@ -18,21 +18,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OgQ-7I-koH">
-                                <rect key="frame" x="313" y="60" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <action selector="actionClose" destination="Av5-rC-Jz4" eventType="touchUpInside" id="kRv-mz-jgL"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sbn-Ih-1jj">
-                                <rect key="frame" x="166.66666666666666" y="60" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <rect key="frame" x="163" y="60" width="49.333333333333343" height="24"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="wA0-ip-cvv">
-                                <rect key="frame" x="0.0" y="97" width="375" height="681"/>
+                                <rect key="frame" x="0.0" y="100" width="375" height="678"/>
                                 <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="J9c-hx-hZR" detailTextLabel="RfQ-pe-gyC" rowHeight="95" style="IBUITableViewCellStyleSubtitle" id="Hrh-F3-oIg">
@@ -66,15 +59,24 @@
                                     <outlet property="delegate" destination="Av5-rC-Jz4" id="GP3-Q8-uCn"/>
                                 </connections>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OgQ-7I-koH">
+                                <rect key="frame" x="313" y="57" width="46" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="actionClose" destination="Av5-rC-Jz4" eventType="touchUpInside" id="kRv-mz-jgL"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="OgQ-7I-koH" firstAttribute="top" secondItem="ozA-et-agx" secondAttribute="top" constant="16" id="Ezj-iE-9he"/>
-                            <constraint firstItem="ozA-et-agx" firstAttribute="trailing" secondItem="OgQ-7I-koH" secondAttribute="trailing" constant="16" id="Q78-vm-d6m"/>
+                            <constraint firstItem="wA0-ip-cvv" firstAttribute="top" secondItem="OgQ-7I-koH" secondAttribute="bottom" constant="13" id="5rI-Kd-hAw"/>
+                            <constraint firstItem="ozA-et-agx" firstAttribute="trailing" secondItem="OgQ-7I-koH" secondAttribute="trailing" constant="16" id="AeL-de-EWQ"/>
                             <constraint firstItem="wA0-ip-cvv" firstAttribute="leading" secondItem="ozA-et-agx" secondAttribute="leading" id="XzZ-Ff-34D"/>
                             <constraint firstItem="sbn-Ih-1jj" firstAttribute="centerX" secondItem="ozA-et-agx" secondAttribute="centerX" id="ffu-ba-cUb"/>
                             <constraint firstItem="ozA-et-agx" firstAttribute="trailing" secondItem="wA0-ip-cvv" secondAttribute="trailing" id="irU-vn-tKN"/>
                             <constraint firstItem="ozA-et-agx" firstAttribute="bottom" secondItem="wA0-ip-cvv" secondAttribute="bottom" id="kaR-BW-bvz"/>
+                            <constraint firstItem="OgQ-7I-koH" firstAttribute="top" secondItem="ozA-et-agx" secondAttribute="top" constant="13" id="o2R-rm-wKT"/>
                             <constraint firstItem="sbn-Ih-1jj" firstAttribute="top" secondItem="ozA-et-agx" secondAttribute="top" constant="16" id="rAP-z0-ksG"/>
                             <constraint firstItem="wA0-ip-cvv" firstAttribute="top" secondItem="sbn-Ih-1jj" secondAttribute="bottom" constant="16" id="rhn-tE-7WT"/>
                         </constraints>
@@ -88,7 +90,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SIe-xQ-ifm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1001" y="123"/>
+            <point key="canvasLocation" x="1000.8" y="122.66009852216749"/>
         </scene>
         <!--Your Favorite Cities-->
         <scene sceneID="cNu-1o-FUz">
