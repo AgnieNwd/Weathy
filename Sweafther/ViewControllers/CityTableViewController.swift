@@ -29,6 +29,7 @@ class CityTableViewController: UITableViewController {
         else {
             loadSampleCities()
         }
+        reloadDataTemp()
     }
     
     
@@ -76,7 +77,8 @@ class CityTableViewController: UITableViewController {
         
         // Configure the cell...
         let cityObject = cities[indexPath.row]
-        
+        print("cityObject  \(cities[indexPath.row])")
+
         cell.imageView?.image = UIImage(named: cityObject.icon)
         cell.textLabel?.text = cityObject.name
         cell.detailTextLabel?.text = "\((cityObject.temperature as NSString).integerValue) \(degrePref)"
@@ -107,8 +109,12 @@ class CityTableViewController: UITableViewController {
     // MARK: - UITableViewDelegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("selected city \(cities[indexPath.row].name)")
+        
+        let selectedCityName = cities[indexPath.row].name
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let viewController = storyboard.instantiateViewController(withIdentifier: "WeatherTableViewController") as? WeatherTableViewController {
+            viewController.city = selectedCityName
             navigationController?.present(viewController, animated: true, completion: nil)
         }
     }
@@ -183,7 +189,7 @@ class CityTableViewController: UITableViewController {
 extension CityTableViewController: SearchCityTableViewDelegate {
     func didSelectedNewCity(_ newCity: String) {
 //        print(newCity)
-        var ifCtity = checkCities(newCity: newCity)
+        let ifCtity = checkCities(newCity: newCity)
         if !ifCtity {
             updateWeatherForLocation(location: newCity, completion: {
                 print("le forcast de city table\(self.CurrentlyData)")

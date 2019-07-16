@@ -65,7 +65,7 @@ struct Weather {
                                         forecastArray.append(weatherObject)
                                     }
                                 }
-                                print("forecastArray<<<<\(forecastArray)")
+//                                print("forecastArray<<<<\(forecastArray)")
 
                             }
                         }

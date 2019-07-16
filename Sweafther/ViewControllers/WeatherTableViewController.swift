@@ -17,14 +17,16 @@ class WeatherTableViewController: UIViewController, UISearchBarDelegate, UITable
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
+    var city: String = ""
     var forecastData = [Weather]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print("citttttttttty issssss \(city)")
         closeButton.setTitle("Close", for: .normal)
-        titleLabel.text = "nom de la ville"
-        updateWeatherForLocation(location: "Paris")
+        titleLabel.text = city
+        updateWeatherForLocation(location: city)
     }
     
     //MARK: Actions
