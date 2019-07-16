@@ -14,6 +14,7 @@ class City: NSObject, NSCoding {
     //MARK: Properties
     var name: String
     var temperature: String
+    var icon: String
 
     
     //MARK: Archiving Paths
@@ -22,21 +23,24 @@ class City: NSObject, NSCoding {
 
     
     //MARK: Initialization
-    init(name: String, temperature: String) {
+    init(name: String, temperature: String, icon: String) {
         self.name = name
         self.temperature = temperature
+        self.icon = icon
     }
     
     //MARK: Types
     struct PropertyKey {
         static let name = "name"
         static let temperature = "temperature"
+        static let icon = "icon"
     }
     
     //MARK: NSCoding
     func encode(with aCoder: NSCoder) {
         aCoder.encode(name, forKey: PropertyKey.name)
         aCoder.encode(temperature, forKey: PropertyKey.temperature)
+        aCoder.encode(icon, forKey: PropertyKey.icon)
     }
     
     required convenience init?(coder aDecoder: NSCoder) {
@@ -51,11 +55,15 @@ class City: NSObject, NSCoding {
             os_log("Unable to decode the temperature for a City object.", log: OSLog.default, type: .debug)
             return nil
         }
+        guard let icon = aDecoder.decodeObject(forKey: PropertyKey.icon) as? String else {
+            os_log("Unable to decode the icon for a City object.", log: OSLog.default, type: .debug)
+            return nil
+        }
         
 //        let temperature = aDecoder.decodeString(forKey: PropertyKey.temperature)
         
         // Must call designated initializer.
-        self.init(name: name, temperature: temperature)
+        self.init(name: name, temperature: temperature, icon: icon )
         
     }
 }

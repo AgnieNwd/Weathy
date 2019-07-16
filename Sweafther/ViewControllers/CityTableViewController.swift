@@ -36,9 +36,9 @@ class CityTableViewController: UITableViewController {
     
     private func loadSampleCities() {
         
-        let city1 = City(name: "Paris", temperature: "27")
-        let city2 = City(name: "New York", temperature: "33")
-        let city3 = City(name: "London", temperature: "25")
+        let city1 = City(name: "Paris", temperature: "27", icon: "clear-day")
+        let city2 = City(name: "New York", temperature: "33", icon: "clear-day")
+        let city3 = City(name: "London", temperature: "25", icon: "clear-day")
         
         cities += [city1, city2, city3]
     }
@@ -77,9 +77,9 @@ class CityTableViewController: UITableViewController {
         // Configure the cell...
         let cityObject = cities[indexPath.row]
         
+        cell.imageView?.image = UIImage(named: cityObject.icon)
         cell.textLabel?.text = cityObject.name
         cell.detailTextLabel?.text = "\((cityObject.temperature as NSString).integerValue) \(degrePref)"
-        
         return cell
     }
  
@@ -161,6 +161,7 @@ class CityTableViewController: UITableViewController {
         for city in cities{
             updateWeatherForLocation(location: city.name, completion: {
                 city.temperature = "\(Int(self.CurrentlyData["temperature"] as? Double ?? -1.0))"
+                city.icon = "\(self.CurrentlyData["icon"] as? String ?? "nothing")"
                 if self.cities.count - 1 == i
                 {
                     self.tableView.reloadData()
@@ -187,7 +188,8 @@ extension CityTableViewController: SearchCityTableViewDelegate {
             updateWeatherForLocation(location: newCity, completion: {
                 print("le forcast de city table\(self.CurrentlyData)")
                 let temperature = "\(Int(self.CurrentlyData["temperature"] as? Double ?? -1.0))"
-                let newCity = City(name: newCity, temperature: temperature)
+                let icon = "\(self.CurrentlyData["icon"] as? String ?? "nothing")"
+                let newCity = City(name: newCity, temperature: temperature, icon: icon)
                 
                 self.cities.append(newCity)
                 self.tableView.reloadData()
