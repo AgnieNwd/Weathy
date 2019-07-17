@@ -41,7 +41,7 @@ struct Weather {
         
         let url = basePath + "\(location.latitude),\(location.longitude)?lang=en&units=si"
         let request = URLRequest(url: URL(string: url)!)
-        print(url)
+        //print(url)
 
         let task = URLSession.shared.dataTask(with: request) { (data:Data?, response:URLResponse?, error:Error?) in
             
@@ -92,7 +92,7 @@ struct Weather {
             url = url + "&units=si"
         }
         let request = URLRequest(url: URL(string: url)!)
-        print(url)
+        //print(url)
         
         let task = URLSession.shared.dataTask(with: request) { (data:Data?, response:URLResponse?, error:Error?) in
             
@@ -105,7 +105,7 @@ struct Weather {
                         //print("json<<<<\(json)")
                         
                         if let currentlyForecasts = json["currently"] as? [String:Any] {
-                            print("currentlyForecasts<<<<\(currentlyForecasts)")
+//                            print("currentlyForecasts<<<<\(currentlyForecasts)")
                             
                             //for Cuurent in currentlyForecasts
                             forecastCurrent = [
@@ -114,7 +114,7 @@ struct Weather {
                                 "icon" : currentlyForecasts["icon"]!
                             ]
                             
-                            print("forecastCurrent<<<<\(forecastCurrent)")
+//                            print("forecastCurrent<<<<\(forecastCurrent)")
                             
                             
                         }

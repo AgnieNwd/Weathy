@@ -10,17 +10,22 @@ import UIKit
 import os.log
 import CoreLocation
 
-
-class CityTableViewController: UITableViewController {
+class CityTableViewController: UITableViewController, CLLocationManagerDelegate {
     
     //MARK: Properties
     
     var cities = [City]()
     var CurrentlyData = [String : Any]()
     var degrePref = String()
+    let manager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        manager.delegate = self
+        manager.desiredAccuracy = kCLLocationAccuracyBest
+        manager.requestWhenInUseAuthorization()
+        manager.startUpdatingLocation()
         
         degrePref = "°C"
         navigationItem.leftBarButtonItem = editButtonItem
@@ -32,8 +37,13 @@ class CityTableViewController: UITableViewController {
         else {
             loadSampleCities()
         }
-        
+        //locationManager(manager, didUpdateLocations: [CLLocation(latitude: 49.2667, longitude: 2.4833)])
         reloadDataTemp()
+        
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
     }
     
     
@@ -152,7 +162,25 @@ class CityTableViewController: UITableViewController {
         }
     }
     
-    
+    // MARK: - func geoLocalisation
+     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let location = locations[0]
+        //let location = CLLocation(latitude: 49.2667, longitude: 2.4833)
+        fetchCityAndCountry(from: location) { city, country, error  in
+            guard let city = city, let country = country, error == nil else { return }
+            print("actuellemnt à " + city + ", " + country)
+            var myCity = City(name: "\(city) (vous êtes ici)", temperature: "27", icon: "clear-day")
+            self.cities += [myCity]
+        }
+        
+    }
+    func fetchCityAndCountry(from location: CLLocation, completion: @escaping (_ city: String?, _ country:  String?, _ error: Error?) -> ()) {
+        CLGeocoder().reverseGeocodeLocation(location) { placemarks, error in
+            completion(placemarks?.first?.locality,
+                       placemarks?.first?.country,
+                       error)
+        }
+    }
     // MARK: - Action
 
     @IBAction func typeOfTemp(_ sender: UIButton) {
@@ -198,7 +226,7 @@ extension CityTableViewController: SearchCityTableViewDelegate {
         let ifCtity = checkCities(newCity: newCity)
         if !ifCtity {
             updateWeatherForLocation(location: newCity, completion: {
-                print("le forcast de city table\(self.CurrentlyData)")
+                //print("le forcast de city table\(self.CurrentlyData)")
                 let temperature = "\(Int(self.CurrentlyData["temperature"] as? Double ?? -1.0))"
                 let icon = "\(self.CurrentlyData["icon"] as? String ?? "nothing")"
                 let newCity = City(name: newCity, temperature: temperature, icon: icon)
