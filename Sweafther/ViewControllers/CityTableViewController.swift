@@ -37,9 +37,10 @@ class CityTableViewController: UITableViewController, CLLocationManagerDelegate 
         else {
             loadSampleCities()
         }
-        //locationManager(manager, didUpdateLocations: [CLLocation(latitude: 49.2667, longitude: 2.4833)])
         reloadDataTemp()
-        
+        //locationManager(manager: manager, didUpdateLocations: [CLLocation(latitude: 49.2667, longitude: 2.4833)], completion: {
+        //  self.reloadDataTemp()
+        //})
     }
     
     override func didReceiveMemoryWarning() {
@@ -163,8 +164,9 @@ class CityTableViewController: UITableViewController, CLLocationManagerDelegate 
     }
     
     // MARK: - func geoLocalisation
-     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation], completion: @escaping() -> ()) {
         let location = locations[0]
+        print(location)
         //let location = CLLocation(latitude: 49.2667, longitude: 2.4833)
         fetchCityAndCountry(from: location) { city, country, error  in
             guard let city = city, let country = country, error == nil else { return }
