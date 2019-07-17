@@ -111,6 +111,7 @@ struct Weather {
                             forecastCurrent = [
                                 "time" : currentlyForecasts["time"]!,
                                 "temperature" : currentlyForecasts["temperature"]!,
+                                "summary" : currentlyForecasts["summary"]!,
                                 "icon" : currentlyForecasts["icon"]!
                             ]
                             
