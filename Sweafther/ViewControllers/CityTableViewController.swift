@@ -172,6 +172,8 @@ class CityTableViewController: UITableViewController, CLLocationManagerDelegate 
             print("actuellemnt à " + city + ", " + country)
             var myCity = City(name: "\(city) (vous êtes ici)", temperature: "27", icon: "clear-day")
             self.cities += [myCity]
+            self.tableView.reloadData()
+
         }
         
     }
