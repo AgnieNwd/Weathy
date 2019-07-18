@@ -61,9 +61,9 @@ class CityTableViewController: UITableViewController, CLLocationManagerDelegate 
     
     private func loadSampleCities() {
         
-        let city1 = City(name: "Paris", temperature: "27", summary: "", icon: "clear-day")
-        let city2 = City(name: "New York", temperature: "33", summary: "", icon: "clear-day")
-        let city3 = City(name: "London", temperature: "25", summary: "", icon: "clear-day")
+        let city1 = City(name: "Paris", temperature: "27", summary: "", icon: "wind")
+        let city2 = City(name: "New York", temperature: "33", summary: "", icon: "wind")
+        let city3 = City(name: "London", temperature: "25", summary: "", icon: "wind")
         
         cities += [city1, city2, city3]
     }
@@ -103,7 +103,7 @@ class CityTableViewController: UITableViewController, CLLocationManagerDelegate 
 
         cell.textLabel?.text = cityObject.name
         cell.detailTextLabel?.text = "\((cityObject.temperature as NSString).integerValue) \(degrePref)"
-        cell.imageView?.image = UIImage.scaleImageToSize(img: UIImage(named: cityObject.icon)!, size: CGSize(width: 40.0, height: 40.0))
+        cell.imageView?.image = UIImage.scaleImageToSize(img: UIImage(named: cityObject.icon) ?? UIImage(named: "rain")!, size: CGSize(width: 40.0, height: 40.0))
 
         return cell
     }
@@ -188,7 +188,7 @@ class CityTableViewController: UITableViewController, CLLocationManagerDelegate 
                 //print("le forcast de city table\(self.CurrentlyData)")
                 let temperature = "\(Int(self.CurrentlyData["temperature"] as? Double ?? -1.0))"
                 let summary = "\(self.CurrentlyData["summary"] as? String ?? "void")"
-                let icon = "\(self.CurrentlyData["icon"] as? String ?? "nothing")"
+                let icon = "\(self.CurrentlyData["icon"] as? String ?? "wind")"
                 let myCity = City(name: "\(city) (you're here)", temperature: temperature, summary: summary, icon: icon)
                 
                 self.cities.insert(myCity, at: 0)
@@ -232,7 +232,7 @@ class CityTableViewController: UITableViewController, CLLocationManagerDelegate 
             updateWeatherForLocation(location: city.name, completion: {
                 city.temperature = "\(Int(self.CurrentlyData["temperature"] as? Double ?? -1.0))"
                 city.summary = "\(self.CurrentlyData["summary"] as? String ?? "void")"
-                city.icon = "\(self.CurrentlyData["icon"] as? String ?? "nothing")"
+                city.icon = "\(self.CurrentlyData["icon"] as? String ?? "wind")"
                 if self.cities.count - 1 == i
                 {
                     self.tableView.reloadData()
@@ -260,7 +260,7 @@ extension CityTableViewController: SearchCityTableViewDelegate {
                 //print("le forcast de city table\(self.CurrentlyData)")
                 let temperature = "\(Int(self.CurrentlyData["temperature"] as? Double ?? -1.0))"
                 let summary = "\(self.CurrentlyData["summary"] as? String ?? "void")"
-                let icon = "\(self.CurrentlyData["icon"] as? String ?? "nothing")"
+                let icon = "\(self.CurrentlyData["icon"] as? String ?? "wind")"
                 let newCity = City(name: newCity, temperature: temperature, summary: summary, icon: icon)
                 
                 self.cities.append(newCity)
