@@ -61,9 +61,9 @@ class CityTableViewController: UITableViewController, CLLocationManagerDelegate 
     
     private func loadSampleCities() {
         
-        let city1 = City(name: "Paris", temperature: "27", icon: "clear-day")
-        let city2 = City(name: "New York", temperature: "33", icon: "clear-day")
-        let city3 = City(name: "London", temperature: "25", icon: "clear-day")
+        let city1 = City(name: "Paris", temperature: "27", summary: "", icon: "clear-day")
+        let city2 = City(name: "New York", temperature: "33", summary: "", icon: "clear-day")
+        let city3 = City(name: "London", temperature: "25", summary: "", icon: "clear-day")
         
         cities += [city1, city2, city3]
     }
@@ -134,10 +134,10 @@ class CityTableViewController: UITableViewController, CLLocationManagerDelegate 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        print("selected city \(cities[indexPath.row].name)")
         
-        let selectedCityName = cities[indexPath.row].name
+        let selectedCity = cities[indexPath.row]
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let viewController = storyboard.instantiateViewController(withIdentifier: "WeatherTableViewController") as? WeatherTableViewController {
-            viewController.city = selectedCityName
+            viewController.city = selectedCity
             navigationController?.present(viewController, animated: true, completion: nil)
         }
     }
@@ -230,6 +230,7 @@ class CityTableViewController: UITableViewController, CLLocationManagerDelegate 
         for city in cities{
             updateWeatherForLocation(location: city.name, completion: {
                 city.temperature = "\(Int(self.CurrentlyData["temperature"] as? Double ?? -1.0))"
+                city.summary = "\(self.CurrentlyData["summary"] as? String ?? "void")"
                 city.icon = "\(self.CurrentlyData["icon"] as? String ?? "nothing")"
                 if self.cities.count - 1 == i
                 {
@@ -257,8 +258,9 @@ extension CityTableViewController: SearchCityTableViewDelegate {
             updateWeatherForLocation(location: newCity, completion: {
                 //print("le forcast de city table\(self.CurrentlyData)")
                 let temperature = "\(Int(self.CurrentlyData["temperature"] as? Double ?? -1.0))"
+                let summary = "\(self.CurrentlyData["summary"] as? String ?? "void")"
                 let icon = "\(self.CurrentlyData["icon"] as? String ?? "nothing")"
-                let newCity = City(name: newCity, temperature: temperature, icon: icon)
+                let newCity = City(name: newCity, temperature: temperature, summary: summary, icon: icon)
                 
                 self.cities.append(newCity)
                 self.tableView.reloadData()

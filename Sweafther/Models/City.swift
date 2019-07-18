@@ -14,6 +14,7 @@ class City: NSObject, NSCoding {
     //MARK: Properties
     var name: String
     var temperature: String
+    var summary: String
     var icon: String
 
     
@@ -23,9 +24,10 @@ class City: NSObject, NSCoding {
 
     
     //MARK: Initialization
-    init(name: String, temperature: String, icon: String) {
+    init(name: String, temperature: String, summary: String, icon: String) {
         self.name = name
         self.temperature = temperature
+        self.summary = summary
         self.icon = icon
     }
     
@@ -33,6 +35,7 @@ class City: NSObject, NSCoding {
     struct PropertyKey {
         static let name = "name"
         static let temperature = "temperature"
+        static let summary = "summary"
         static let icon = "icon"
     }
     
@@ -40,6 +43,7 @@ class City: NSObject, NSCoding {
     func encode(with aCoder: NSCoder) {
         aCoder.encode(name, forKey: PropertyKey.name)
         aCoder.encode(temperature, forKey: PropertyKey.temperature)
+        aCoder.encode(summary, forKey: PropertyKey.summary)
         aCoder.encode(icon, forKey: PropertyKey.icon)
     }
     
@@ -55,6 +59,12 @@ class City: NSObject, NSCoding {
             os_log("Unable to decode the temperature for a City object.", log: OSLog.default, type: .debug)
             return nil
         }
+        
+        guard let summary = aDecoder.decodeObject(forKey: PropertyKey.summary) as? String else {
+            os_log("Unable to decode the summary for a City object.", log: OSLog.default, type: .debug)
+            return nil
+        }
+        
         guard let icon = aDecoder.decodeObject(forKey: PropertyKey.icon) as? String else {
             os_log("Unable to decode the icon for a City object.", log: OSLog.default, type: .debug)
             return nil
@@ -63,7 +73,7 @@ class City: NSObject, NSCoding {
 //        let temperature = aDecoder.decodeString(forKey: PropertyKey.temperature)
         
         // Must call designated initializer.
-        self.init(name: name, temperature: temperature, icon: icon )
+        self.init(name: name, temperature: temperature, summary: summary, icon: icon )
         
     }
 }

@@ -16,16 +16,23 @@ class WeatherTableViewController: UIViewController, UISearchBarDelegate, UITable
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var summaryLabel: UILabel!
+    @IBOutlet weak var iconImage: UIImageView!
+    @IBOutlet weak var tempLabel: UILabel!
     
-    var city: String = ""
+    var city: City!
     var forecastData = [Weather]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         closeButton.setTitle("Close", for: .normal)
-        titleLabel.text = city
-        updateWeatherForLocation(location: city)
+        titleLabel.text = city.name
+        summaryLabel.text = city.summary
+        iconImage.image = UIImage(named: city.icon)
+        tempLabel.text = "\(city.temperature) º"
+
+        updateWeatherForLocation(location: city.name)
     }
     
     //MARK: Actions
@@ -69,7 +76,7 @@ class WeatherTableViewController: UIViewController, UISearchBarDelegate, UITable
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         let date = Calendar.current.date(byAdding: .day, value: section, to: Date())
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMMM dd, yyyy"
+        dateFormatter.dateFormat = "EEEE, MMMM dd"
         
         return dateFormatter.string(from: date!)
     }
