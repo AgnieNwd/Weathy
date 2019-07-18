@@ -22,9 +22,19 @@ class CityTableViewController: UITableViewController, CLLocationManagerDelegate 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if CLLocationManager.locationServicesEnabled() == true {
+            if CLLocationManager.authorizationStatus() == .restricted ||
+                CLLocationManager.authorizationStatus() == .denied ||
+                CLLocationManager.authorizationStatus() == .notDetermined {
+
+                manager.requestWhenInUseAuthorization()
+            }
+        } else {
+            print("Please turn on location service")
+        }
         manager.delegate = self
         manager.desiredAccuracy = kCLLocationAccuracyBest
-        manager.requestWhenInUseAuthorization()
+        
         manager.startUpdatingLocation()
         
         degrePref = "°C"
@@ -182,6 +192,11 @@ class CityTableViewController: UITableViewController, CLLocationManagerDelegate 
         }
         
     }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("unable to acess your current location, error :\(error)")
+    }
+    
     func fetchCityAndCountry(from location: CLLocation, completion: @escaping (_ city: String?, _ country:  String?, _ error: Error?) -> ()) {
         CLGeocoder().reverseGeocodeLocation(location) { placemarks, error in
             completion(placemarks?.first?.locality,
