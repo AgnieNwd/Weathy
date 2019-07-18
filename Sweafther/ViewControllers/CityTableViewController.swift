@@ -170,7 +170,7 @@ class CityTableViewController: UITableViewController, CLLocationManagerDelegate 
         fetchCityAndCountry(from: location) { city, country, error  in
             guard let city = city, let country = country, error == nil else { return }
             print("actuellemnt à " + city + ", " + country)
-            var myCity = City(name: "\(city) (vous êtes ici)", temperature: "27", icon: "clear-day")
+            let myCity = City(name: "\(city) (vous êtes ici)", temperature: "27", icon: "clear-day")
             self.cities += [myCity]
             self.tableView.reloadData()
 
