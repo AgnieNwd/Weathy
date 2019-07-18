@@ -200,7 +200,7 @@
                         <subviews>
                             <searchBar contentMode="redraw" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yoy-mo-lcD">
                                 <rect key="frame" x="0.0" y="88" width="375" height="56"/>
-                                <color key="barTintColor" red="0.78039199999999997" green="0.85882400000000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="barTintColor" red="0.82343631572290232" green="0.78962095788383035" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <outlet property="delegate" destination="wI7-KP-j93" id="UKa-dN-5AP"/>

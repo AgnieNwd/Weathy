@@ -81,19 +81,6 @@ class WeatherTableViewController: UIViewController, UISearchBarDelegate, UITable
         return dateFormatter.string(from: date!)
     }
     
-//    func scaleImageToSize(img: UIImage, size: CGSize) -> UIImage {
-//        UIGraphicsBeginImageContext(size)
-//
-//        img.draw(in: CGRect(origin: CGPoint.zero, size: size))
-//
-//        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
-//
-//        UIGraphicsEndImageContext()
-//
-//        return scaledImage!
-//    }
-
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 
