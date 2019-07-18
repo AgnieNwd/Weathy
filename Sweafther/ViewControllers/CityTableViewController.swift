@@ -176,7 +176,6 @@ class CityTableViewController: UITableViewController, CLLocationManagerDelegate 
      func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location = locations[0]
         print(location)
-        print("first city name >>>>>>> \(cities[0].name)")
         if cities[0].name.contains("you're here") {
             cities.remove(at: 0)
         }
@@ -185,10 +184,17 @@ class CityTableViewController: UITableViewController, CLLocationManagerDelegate 
         fetchCityAndCountry(from: location) { city, country, error  in
             guard let city = city, let country = country, error == nil else { return }
             print("actuellemnt à " + city + ", " + country)
-            let myCity = City(name: "\(city) (you're here)", temperature: "27", icon: "clear-day")
-            self.cities.insert(myCity, at: 0)
-            self.tableView.reloadData()
-
+            self.updateWeatherForLocation(location: city, completion: {
+                //print("le forcast de city table\(self.CurrentlyData)")
+                let temperature = "\(Int(self.CurrentlyData["temperature"] as? Double ?? -1.0))"
+                let icon = "\(self.CurrentlyData["icon"] as? String ?? "nothing")"
+                let myCity = City(name: "\(city) (you're here)", temperature: temperature, icon: icon)
+                
+                self.cities.insert(myCity, at: 0)
+                self.tableView.reloadData()
+            
+                self.saveCities()
+            })
         }
         
     }
