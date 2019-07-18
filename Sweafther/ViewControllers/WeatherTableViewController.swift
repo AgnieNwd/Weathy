@@ -30,7 +30,7 @@ class WeatherTableViewController: UIViewController, UISearchBarDelegate, UITable
         titleLabel.text = city.name
         summaryLabel.text = city.summary
         iconImage.image = UIImage(named: city.icon)
-        tempLabel.text = "\(city.temperature) º"
+        tempLabel.text = "\(city.temperature)º"
 
         updateWeatherForLocation(location: city.name)
     }

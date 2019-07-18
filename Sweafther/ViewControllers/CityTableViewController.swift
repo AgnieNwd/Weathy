@@ -187,8 +187,9 @@ class CityTableViewController: UITableViewController, CLLocationManagerDelegate 
             self.updateWeatherForLocation(location: city, completion: {
                 //print("le forcast de city table\(self.CurrentlyData)")
                 let temperature = "\(Int(self.CurrentlyData["temperature"] as? Double ?? -1.0))"
+                let summary = "\(self.CurrentlyData["summary"] as? String ?? "void")"
                 let icon = "\(self.CurrentlyData["icon"] as? String ?? "nothing")"
-                let myCity = City(name: "\(city) (you're here)", temperature: temperature, icon: icon)
+                let myCity = City(name: "\(city) (you're here)", temperature: temperature, summary: summary, icon: icon)
                 
                 self.cities.insert(myCity, at: 0)
                 self.tableView.reloadData()
