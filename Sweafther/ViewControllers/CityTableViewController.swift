@@ -10,14 +10,15 @@ import UIKit
 import os.log
 import CoreLocation
 
-class CityTableViewController: UITableViewController, CLLocationManagerDelegate {
+class CityTableViewController: UITableViewController {
     
     //MARK: Properties
     
     var cities = [City]()
+    var locatedCity: City? = nil
     var CurrentlyData = [String : Any]()
     var degrePref = String()
-    let manager = CLLocationManager()
+    let locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,15 +28,15 @@ class CityTableViewController: UITableViewController, CLLocationManagerDelegate 
                 CLLocationManager.authorizationStatus() == .denied ||
                 CLLocationManager.authorizationStatus() == .notDetermined {
 
-                manager.requestWhenInUseAuthorization()
+                locationManager.requestWhenInUseAuthorization()
             }
         } else {
             print("Please turn on location service")
         }
-        manager.delegate = self
-        manager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
         
-        manager.startUpdatingLocation()
+        locationManager.startUpdatingLocation()
         
         degrePref = "°C"
         navigationItem.leftBarButtonItem = editButtonItem
@@ -47,15 +48,9 @@ class CityTableViewController: UITableViewController, CLLocationManagerDelegate 
         else {
             loadSampleCities()
         }
-        //locationManager(manager, didUpdateLocations: [CLLocation(latitude: 49.2667, longitude: 2.4833)])
+
         reloadDataTemp()
-        
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
     
     //MARK: Private Methods
     
@@ -85,26 +80,29 @@ class CityTableViewController: UITableViewController, CLLocationManagerDelegate 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return cities.count
+        return cities.count + (locatedCity != nil ? 1 : 0)
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell City", for: indexPath)
         
-        // Configure the cell...
-        let cityObject = cities[indexPath.row]
-
-        cell.textLabel?.text = cityObject.name
-        cell.detailTextLabel?.text = "\((cityObject.temperature as NSString).integerValue) \(degrePref)"
-        cell.imageView?.image = UIImage.scaleImageToSize(img: UIImage(named: cityObject.icon) ?? UIImage(named: "rain")!, size: CGSize(width: 40.0, height: 40.0))
-
+        if indexPath.row == 0, let locatedCity = locatedCity {
+            cell.textLabel?.text = locatedCity.name
+            cell.detailTextLabel?.text = "\(locatedCity.temperature) \(degrePref)"
+            cell.imageView?.image = UIImage.scaleImageToSize(img: UIImage(named: locatedCity.icon) ?? UIImage(named: "rain")!, size: CGSize(width: 40.0, height: 40.0))
+        } else {
+            let index = indexPath.row - (locatedCity != nil ? 1 : 0)
+            let cityObject = cities[index]
+            
+            cell.textLabel?.text = cityObject.name
+            cell.detailTextLabel?.text = "\((cityObject.temperature as NSString).integerValue) \(degrePref)"
+            cell.imageView?.image = UIImage.scaleImageToSize(img: UIImage(named: cityObject.icon) ?? UIImage(named: "rain")!, size: CGSize(width: 40.0, height: 40.0))
+        }
         return cell
     }
  
@@ -112,7 +110,9 @@ class CityTableViewController: UITableViewController, CLLocationManagerDelegate 
     
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
+        if indexPath.row == 0, locatedCity != nil {
+            return false
+        }
         return true
     }
     
@@ -132,12 +132,15 @@ class CityTableViewController: UITableViewController, CLLocationManagerDelegate 
     // MARK: - UITableViewDelegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        print("selected city \(cities[indexPath.row].name)")
-        
-        let selectedCity = cities[indexPath.row]
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let viewController = storyboard.instantiateViewController(withIdentifier: "WeatherTableViewController") as? WeatherTableViewController {
-            viewController.city = selectedCity
+            if indexPath.row == 0, let locatedCity = locatedCity {
+                viewController.city = locatedCity
+            } else {
+                let index = indexPath.row - (locatedCity != nil ? 1 : 0)
+                let selectedCity = cities[index]
+                viewController.city = selectedCity
+            }
             navigationController?.present(viewController, animated: true, completion: nil)
         }
     }
@@ -170,38 +173,6 @@ class CityTableViewController: UITableViewController, CLLocationManagerDelegate 
         if let viewController = segue.destination as? SearchCityViewController {
             viewController.delegate = self
         }
-    }
-    
-    // MARK: - func geoLocalisation
-     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let location = locations[0]
-        print(location)
-        if cities[0].name.contains("you're here") {
-            cities.remove(at: 0)
-        }
-
-        //let location = CLLocation(latitude: 49.2667, longitude: 2.4833)
-        fetchCityAndCountry(from: location) { city, country, error  in
-            guard let city = city, let country = country, error == nil else { return }
-            print("actuellemnt à " + city + ", " + country)
-            self.updateWeatherForLocation(location: city, completion: {
-                //print("le forcast de city table\(self.CurrentlyData)")
-                let temperature = "\(Int(self.CurrentlyData["temperature"] as? Double ?? -1.0))"
-                let summary = "\(self.CurrentlyData["summary"] as? String ?? "void")"
-                let icon = "\(self.CurrentlyData["icon"] as? String ?? "wind")"
-                let myCity = City(name: "\(city) (you're here)", temperature: temperature, summary: summary, icon: icon)
-                
-                self.cities.insert(myCity, at: 0)
-                self.tableView.reloadData()
-            
-                self.saveCities()
-            })
-        }
-        
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("unable to acess your current location, error :\(error)")
     }
     
     func fetchCityAndCountry(from location: CLLocation, completion: @escaping (_ city: String?, _ country:  String?, _ error: Error?) -> ()) {
@@ -248,6 +219,34 @@ class CityTableViewController: UITableViewController, CLLocationManagerDelegate 
             }
         }
         return false
+    }
+}
+
+// MARK: - CLLocationManagerDelegate
+
+extension CityTableViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let location = locations[0]
+        print(location)
+        
+        fetchCityAndCountry(from: location) { city, country, error  in
+            guard let city = city, let country = country, error == nil else { return }
+            print("actuellemnt à " + city + ", " + country)
+            self.updateWeatherForLocation(location: city, completion: {
+                //print("le forcast de city table\(self.CurrentlyData)")
+
+                let temperature = "\(Int(self.CurrentlyData["temperature"] as? Double ?? -1.0))"
+                let summary = "\(self.CurrentlyData["summary"] as? String ?? "void")"
+                let icon = "\(self.CurrentlyData["icon"] as? String ?? "wind")"
+                self.locatedCity = City(name: "\(city) (you're here)", temperature: temperature, summary: summary, icon: icon)
+                
+                self.tableView.reloadData()
+            })
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("unable to acess your current location, error :\(error)")
     }
 }
 
