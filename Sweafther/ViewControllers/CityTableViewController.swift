@@ -16,10 +16,13 @@ class CityTableViewController: UITableViewController {
     
     var cities = [City]()
     var locatedCity: City? = nil
+    
     var CurrentlyData = [String : Any]()
     var degrePref = String()
-    let locationManager = CLLocationManager()
     
+    let locationManager = CLLocationManager()
+    var timer: Timer!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -35,12 +38,13 @@ class CityTableViewController: UITableViewController {
         }
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
-        
         locationManager.startUpdatingLocation()
         
         degrePref = "°C"
         navigationItem.leftBarButtonItem = editButtonItem
         
+        timer = Timer.scheduledTimer(timeInterval: 120.0, target: self, selector: #selector(self.refreshEvery2Minutes), userInfo: nil, repeats: true)
+
         // Load any saved cities, otherwise load sample data.
         if let savedCities = loadCities() {
             cities += savedCities
@@ -49,7 +53,7 @@ class CityTableViewController: UITableViewController {
             loadSampleCities()
         }
 
-        reloadDataTemp()
+        reloadCityData(completion:{})
     }
     
     //MARK: Private Methods
@@ -105,8 +109,6 @@ class CityTableViewController: UITableViewController {
         }
         return cell
     }
- 
-
     
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -182,8 +184,8 @@ class CityTableViewController: UITableViewController {
                        error)
         }
     }
+    
     // MARK: - Action
-
     @IBAction func typeOfTemp(_ sender: UIButton) {
         if degrePref == "°F" {
             sender.setTitle("°F", for: [])
@@ -193,12 +195,19 @@ class CityTableViewController: UITableViewController {
             sender.setTitle("°C", for: [])
             degrePref = "°F"
         }
-        reloadDataTemp()
+        reloadCityData(completion:{})
     }
     
     
-    func reloadDataTemp() {
+    func reloadCityData(completion: @escaping () -> ()) {
         var i = 0
+        if locatedCity != nil {
+            updateWeatherForLocation(location: locatedCity?.name ?? "Paris", completion: {
+                self.locatedCity?.temperature = "\(Int(self.CurrentlyData["temperature"] as? Double ?? -1.0))"
+                self.locatedCity?.summary = "\(self.CurrentlyData["summary"] as? String ?? "void")"
+                self.locatedCity?.icon = "\(self.CurrentlyData["icon"] as? String ?? "wind")"
+            })
+        }
         for city in cities{
             updateWeatherForLocation(location: city.name, completion: {
                 city.temperature = "\(Int(self.CurrentlyData["temperature"] as? Double ?? -1.0))"
@@ -207,11 +216,15 @@ class CityTableViewController: UITableViewController {
                 if self.cities.count - 1 == i
                 {
                     self.tableView.reloadData()
+                    DispatchQueue.main.async {
+                        completion()
+                    }
                 }
                 i = i + 1
             })
         }
     }
+    
     func checkCities(newCity: String)->Bool {
         for city in cities {
             if city.name == newCity {
@@ -219,6 +232,23 @@ class CityTableViewController: UITableViewController {
             }
         }
         return false
+    }
+    
+    // MARK: - Refresh
+    
+    @IBAction func refreshCityData(_ sender: UIRefreshControl) {
+        reloadCityData(completion: {
+            print("refresh")
+            
+            sender.endRefreshing()
+        })
+    }
+    
+    @objc func refreshEvery2Minutes(){
+        reloadCityData(completion: {
+            print("refresh 2 mintutes")
+        })
+        
     }
 }
 
