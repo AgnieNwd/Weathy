@@ -167,6 +167,35 @@ class CityTableViewController: UITableViewController {
             }
         }
     }
+    func SwitchDegreType() {
+       if degrePref == "°F" {
+            for city in self.cities {
+                let temp = Double(city.temperature)
+                let newTemp = (temp! * 1.8) + 32
+                //print("en °F \(newTemp) pour la ville de \(city.name)")
+                city.temperature = String((Int(newTemp)))
+            }
+            if locatedCity != nil {
+                let temp = Double(locatedCity!.temperature)
+                let newTemp = (temp! * 1.8) + 32
+                //print("en °F \(newTemp) pour la ville de \(locatedCity!.name)")
+                locatedCity!.temperature = String((Int(newTemp)))
+            }
+        } else {
+            for city in self.cities {
+                let temp = Double(city.temperature)
+                let newTemp = (temp! - 32) / 1.8
+                //print("en °F \(newTemp) pour la ville de \(city.name)")
+                city.temperature = String((Int(newTemp)))
+            }
+            if locatedCity != nil {
+                let temp = Double(locatedCity!.temperature)
+                let newTemp = (temp! - 32) / 1.8
+                print("en °C \(newTemp) pour la ville de \(locatedCity!.name)")
+                locatedCity!.temperature = String((Int(newTemp)))
+            }
+        }
+    }
     
     // MARK: - Navigation
 
@@ -195,7 +224,10 @@ class CityTableViewController: UITableViewController {
             sender.setTitle("°C", for: [])
             degrePref = "°F"
         }
-        reloadCityData(completion:{})
+
+        SwitchDegreType()
+        //reloadCityData()
+        tableView.reloadData()
     }
     
     
