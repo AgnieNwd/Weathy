@@ -166,13 +166,28 @@ class CityTableViewController: UITableViewController {
         }
     }
     func SwitchDegreType() {
-        for city in self.cities {
-            if degrePref == "°F" {
-                let C = Double(city.temperature)
-                let F = (C! * 1.8) + 32
-                print("en °F \(F) pour la ville de \(city.name)")
-                city.temperature = String((Int(F)))
+       if degrePref == "°F" {
+            for city in self.cities {
+                let temp = Double(city.temperature)
+                let newTemp = (temp! * 1.8) + 32
+                //print("en °F \(newTemp) pour la ville de \(city.name)")
+                city.temperature = String((Int(newTemp)))
             }
+            let temp = Double(locatedCity!.temperature)
+            let newTemp = (temp! * 1.8) + 32
+            //print("en °F \(newTemp) pour la ville de \(locatedCity!.name)")
+            locatedCity!.temperature = String((Int(newTemp)))
+        } else {
+            for city in self.cities {
+                let temp = Double(city.temperature)
+                let newTemp = (temp! - 32) / 1.8
+                //print("en °F \(newTemp) pour la ville de \(city.name)")
+                city.temperature = String((Int(newTemp)))
+            }
+            let temp = Double(locatedCity!.temperature)
+            let newTemp = (temp! - 32) / 1.8
+            //print("en °C \(newTemp) pour la ville de \(locatedCity!.name)")
+            locatedCity!.temperature = String((Int(newTemp)))
         }
     }
     
@@ -202,9 +217,10 @@ class CityTableViewController: UITableViewController {
         else {
             sender.setTitle("°C", for: [])
             degrePref = "°F"
-            SwitchDegreType()
         }
-        reloadDataTemp()
+        SwitchDegreType()
+        //reloadDataTemp()
+        tableView.reloadData()
     }
     
     
