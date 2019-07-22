@@ -97,7 +97,7 @@ class CityTableViewController: UITableViewController {
         
         if indexPath.row == 0, let locatedCity = locatedCity {
             cell.textLabel?.text = locatedCity.name
-            cell.detailTextLabel?.text = "\(locatedCity.temperature) \(degrePref)"
+            cell.detailTextLabel?.text = "\((locatedCity.temperature as NSString).integerValue) \(degrePref)"
             cell.imageView?.image = UIImage.scaleImageToSize(img: UIImage(named: locatedCity.icon) ?? UIImage(named: "rain")!, size: CGSize(width: 40.0, height: 40.0))
         } else {
             let index = indexPath.row - (locatedCity != nil ? 1 : 0)
@@ -173,26 +173,26 @@ class CityTableViewController: UITableViewController {
                 let temp = Double(city.temperature)
                 let newTemp = (temp! * 1.8) + 32
                 //print("en °F \(newTemp) pour la ville de \(city.name)")
-                city.temperature = String((Int(newTemp)))
+                city.temperature = String(newTemp)
             }
             if locatedCity != nil {
                 let temp = Double(locatedCity!.temperature)
                 let newTemp = (temp! * 1.8) + 32
                 //print("en °F \(newTemp) pour la ville de \(locatedCity!.name)")
-                locatedCity!.temperature = String((Int(newTemp)))
+                locatedCity!.temperature = String(newTemp)
             }
         } else {
             for city in self.cities {
                 let temp = Double(city.temperature)
                 let newTemp = (temp! - 32) / 1.8
                 //print("en °F \(newTemp) pour la ville de \(city.name)")
-                city.temperature = String((Int(newTemp)))
+                city.temperature = String(newTemp)
             }
             if locatedCity != nil {
                 let temp = Double(locatedCity!.temperature)
                 let newTemp = (temp! - 32) / 1.8
-                print("en °C \(newTemp) pour la ville de \(locatedCity!.name)")
-                locatedCity!.temperature = String((Int(newTemp)))
+                //print("en °C \(newTemp) pour la ville de \(locatedCity!.name)")
+                locatedCity!.temperature = String(newTemp)
             }
         }
     }
