@@ -115,7 +115,7 @@ struct Weather {
                                 "icon" : currentlyForecasts["icon"]!
                             ]
                             
-                            print("forecastCurrent<<<<\(forecastCurrent)")
+                            //print("forecastCurrent<<<<\(forecastCurrent)")
                             
                             
                         }

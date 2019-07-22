@@ -165,6 +165,16 @@ class CityTableViewController: UITableViewController {
             }
         }
     }
+    func SwitchDegreType() {
+        for city in self.cities {
+            if degrePref == "°F" {
+                let C = Double(city.temperature)
+                let F = (C! * 1.8) + 32
+                print("en °F \(F) pour la ville de \(city.name)")
+                city.temperature = String((Int(F)))
+            }
+        }
+    }
     
     // MARK: - Navigation
 
@@ -192,6 +202,7 @@ class CityTableViewController: UITableViewController {
         else {
             sender.setTitle("°C", for: [])
             degrePref = "°F"
+            SwitchDegreType()
         }
         reloadDataTemp()
     }
@@ -199,17 +210,21 @@ class CityTableViewController: UITableViewController {
     
     func reloadDataTemp() {
         var i = 0
-        for city in cities{
-            updateWeatherForLocation(location: city.name, completion: {
-                city.temperature = "\(Int(self.CurrentlyData["temperature"] as? Double ?? -1.0))"
-                city.summary = "\(self.CurrentlyData["summary"] as? String ?? "void")"
-                city.icon = "\(self.CurrentlyData["icon"] as? String ?? "wind")"
-                if self.cities.count - 1 == i
-                {
-                    self.tableView.reloadData()
-                }
-                i = i + 1
-            })
+        if degrePref == "°C" {
+            for city in cities{
+                updateWeatherForLocation(location: city.name, completion: {
+                    city.temperature = "\(Int(self.CurrentlyData["temperature"] as? Double ?? -1.0))"
+                    city.summary = "\(self.CurrentlyData["summary"] as? String ?? "void")"
+                    city.icon = "\(self.CurrentlyData["icon"] as? String ?? "wind")"
+                    if self.cities.count - 1 == i
+                    {
+                        self.tableView.reloadData()
+                    }
+                    i = i + 1
+                })
+            }
+        } else {
+            self.tableView.reloadData()
         }
     }
     func checkCities(newCity: String)->Bool {
