@@ -143,6 +143,7 @@ class CityTableViewController: UITableViewController {
                 let selectedCity = cities[index]
                 viewController.city = selectedCity
             }
+            viewController.degre = degrePref
             navigationController?.present(viewController, animated: true, completion: nil)
         }
     }
@@ -205,7 +206,7 @@ class CityTableViewController: UITableViewController {
             viewController.delegate = self
         }
     }
-    
+
     func fetchCityAndCountry(from location: CLLocation, completion: @escaping (_ city: String?, _ country:  String?, _ error: Error?) -> ()) {
         CLGeocoder().reverseGeocodeLocation(location) { placemarks, error in
             completion(placemarks?.first?.locality,
@@ -327,7 +328,6 @@ extension CityTableViewController: SearchCityTableViewDelegate {
                 self.cities.append(newCity)
                 self.tableView.reloadData()
                 //self.navigationController?.popViewController(animated: true)
-                
                 self.saveCities()
             })
         }

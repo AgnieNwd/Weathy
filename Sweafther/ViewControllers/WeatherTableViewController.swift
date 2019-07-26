@@ -20,17 +20,21 @@ class WeatherTableViewController: UIViewController, UISearchBarDelegate, UITable
     @IBOutlet weak var iconImage: UIImageView!
     @IBOutlet weak var tempLabel: UILabel!
     
+    var degre: String = ""
     var city: City!
     var forecastData = [Weather]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print("degre \(degre)")
+        
         closeButton.setTitle("Close", for: .normal)
         titleLabel.text = city.name
         summaryLabel.text = city.summary
         iconImage.image = UIImage(named: city.icon)
-        tempLabel.text = "\((city.temperature as NSString).integerValue) º"
+        tempLabel.text = "\((city.temperature as NSString).integerValue) \(degre)"
+
 
         updateWeatherForLocation(location: city.name)
     }
