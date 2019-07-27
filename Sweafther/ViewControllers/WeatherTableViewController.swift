@@ -26,7 +26,7 @@ class WeatherTableViewController: UIViewController, UISearchBarDelegate, UITable
     @IBOutlet weak var tempLabel: UILabel!
     @IBOutlet var collectionView: UICollectionView!
     
-
+    var degre: String = ""
     var city: City!
     var forecastData = [Weather]()
     var hourlyForecastData = [[String:Any]]()
@@ -38,7 +38,7 @@ class WeatherTableViewController: UIViewController, UISearchBarDelegate, UITable
         titleLabel.text = city.name
         summaryLabel.text = city.summary
         iconImage.image = UIImage(named: city.icon)
-        tempLabel.text = "\((city.temperature as NSString).integerValue) º"
+        tempLabel.text = "\((city.temperature as NSString).integerValue) \(degre)"
 
         updateWeatherForLocation(location: city.name)
     }
@@ -70,9 +70,6 @@ class WeatherTableViewController: UIViewController, UISearchBarDelegate, UITable
                         }
                     })
                     
-//                    DispatchQueue.main.async {
-//                        self.tableView.reloadData()
-//                    }
                 }
             }
         }
@@ -104,12 +101,23 @@ class WeatherTableViewController: UIViewController, UISearchBarDelegate, UITable
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 
         let weatherObject = forecastData[indexPath.section]
-        
+        let temp = SwitchDegreType(obj: weatherObject)
         cell.textLabel?.text = weatherObject.summary
-        cell.detailTextLabel?.text = "\(Int(weatherObject.temperature)) °C"
+        cell.detailTextLabel?.text = "\(Int(temp)) \(degre)"
         cell.imageView?.image = UIImage.scaleImageToSize(img: UIImage(named: weatherObject.icon)!, size: CGSize(width: 35.0, height: 35.0))
         
         return cell
+    }
+    
+    func SwitchDegreType(obj: Weather)->Double {
+        if degre == "°F" {
+                let temp = Double(obj.temperature)
+                let newTemp = (temp * 1.8) + 32
+                //print("en °F \(newTemp) pour la ville de \(city.name)")
+                return newTemp
+        } else {
+              return obj.temperature
+        }
     }
 }
 
@@ -124,11 +132,9 @@ extension WeatherTableViewController: UICollectionViewDataSource, UICollectionVi
         let weatherObject = hourlyForecastData[indexPath.row]
 
         let date = NSDate(timeIntervalSince1970: weatherObject["time"] as! TimeInterval)
-//        print("date \(date))")
 
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH"
-        print("date heure \(dateFormatter.string(from: date as Date))")
 
         cell.hourlyLabel.text = "\(dateFormatter.string(from: date as Date))H"
         cell.hourlyIconImage.image = UIImage(named: "\(weatherObject["icon"]!)")
