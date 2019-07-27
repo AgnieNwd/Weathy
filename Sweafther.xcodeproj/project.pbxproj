@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		00FCF4BF22DF150E00E4B764 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00FCF4BE22DF150E00E4B764 /* CoreLocation.framework */; };
+		740DCB6822EB21AE0099A47C /* WheatherCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740DCB6722EB21AE0099A47C /* WheatherCollectionViewCell.swift */; };
 		7474852222D3B0B600C0916F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7474852122D3B0B600C0916F /* AppDelegate.swift */; };
 		7474853722D3B0B700C0916F /* SweaftherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7474853622D3B0B700C0916F /* SweaftherTests.swift */; };
 		7474854222D3B0B700C0916F /* SweaftherUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7474854122D3B0B700C0916F /* SweaftherUITests.swift */; };
@@ -41,6 +42,7 @@
 
 /* Begin PBXFileReference section */
 		00FCF4BE22DF150E00E4B764 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		740DCB6722EB21AE0099A47C /* WheatherCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheatherCollectionViewCell.swift; sourceTree = "<group>"; };
 		7474851E22D3B0B600C0916F /* Sweafther.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sweafther.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7474852122D3B0B600C0916F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7474853222D3B0B700C0916F /* SweaftherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SweaftherTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -152,6 +154,7 @@
 				74B5294222D4D86100A78302 /* CityTableViewController.swift */,
 				74B5294622D5EC8F00A78302 /* SearchCityViewController.swift */,
 				7474854F22D3B27300C0916F /* WeatherTableViewController.swift */,
+				740DCB6722EB21AE0099A47C /* WheatherCollectionViewCell.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -319,6 +322,7 @@
 				74EC02CC22DB393E00BC37D8 /* City.swift in Sources */,
 				7474855022D3B27300C0916F /* WeatherTableViewController.swift in Sources */,
 				74EC02D222DB39DA00BC37D8 /* CityTableViewController.swift in Sources */,
+				740DCB6822EB21AE0099A47C /* WheatherCollectionViewCell.swift in Sources */,
 				74B5294722D5EC8F00A78302 /* SearchCityViewController.swift in Sources */,
 				7474852222D3B0B600C0916F /* AppDelegate.swift in Sources */,
 				74EC02CD22DB393E00BC37D8 /* Weather.swift in Sources */,

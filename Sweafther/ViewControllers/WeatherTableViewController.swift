@@ -9,6 +9,11 @@
 import UIKit
 import CoreLocation
 
+struct hourlyData {
+    let temperature: String
+    let icon: String
+}
+
 class WeatherTableViewController: UIViewController, UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate {
 
     //MARK: Properties
@@ -19,10 +24,13 @@ class WeatherTableViewController: UIViewController, UISearchBarDelegate, UITable
     @IBOutlet weak var summaryLabel: UILabel!
     @IBOutlet weak var iconImage: UIImageView!
     @IBOutlet weak var tempLabel: UILabel!
+    @IBOutlet var collectionView: UICollectionView!
     
+
     var city: City!
     var forecastData = [Weather]()
-    
+    var hourlyForecastData = [[String:Any]]()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,19 +49,30 @@ class WeatherTableViewController: UIViewController, UISearchBarDelegate, UITable
         CLGeocoder().geocodeAddressString(location) { (placemarks:[CLPlacemark]?, error:Error?) in
             if error == nil {
                 if let location = placemarks?.first?.location {
+                    
                     Weather.forecast(withLocation: location.coordinate, completion: { (results:[Weather]?) in
-                        
-                        // check if weather is here
                         if let weatherData = results {
                             self.forecastData = weatherData
                             
                             DispatchQueue.main.async {
                                 self.tableView.reloadData()
                             }
-                            
                         }
-                        
                     })
+                    
+                    Weather.getHourlyData(typeTemp: "°C", withLocation: location.coordinate, completion: { (results:[[String:Any]]?) in
+                        if let weatherHourlyData = results {
+                            self.hourlyForecastData = weatherHourlyData
+                            
+                            DispatchQueue.main.async {
+                                self.collectionView.reloadData()
+                            }
+                        }
+                    })
+                    
+//                    DispatchQueue.main.async {
+//                        self.tableView.reloadData()
+//                    }
                 }
             }
         }
@@ -92,4 +111,32 @@ class WeatherTableViewController: UIViewController, UISearchBarDelegate, UITable
         
         return cell
     }
+}
+
+extension WeatherTableViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return hourlyForecastData.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Hourly Cell", for: indexPath) as! WheatherCollectionViewCell
+
+        let weatherObject = hourlyForecastData[indexPath.row]
+
+        let date = NSDate(timeIntervalSince1970: weatherObject["time"] as! TimeInterval)
+//        print("date \(date))")
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH"
+        print("date heure \(dateFormatter.string(from: date as Date))")
+
+        cell.hourlyLabel.text = "\(dateFormatter.string(from: date as Date))H"
+        cell.hourlyIconImage.image = UIImage(named: "\(weatherObject["icon"]!)")
+        cell.temperatureLabel.text = "\(Int(weatherObject["temperature"]! as! Double))°"
+
+        
+        return cell
+    }
+    
+    
 }

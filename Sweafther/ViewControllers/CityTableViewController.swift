@@ -152,7 +152,7 @@ class CityTableViewController: UITableViewController {
             if error == nil {
                 if let location = placemarks?.first?.location {
                     //Weather.forecast(withLocation: location.coordinate, completion: { (results:[Weather]?) in
-                    Weather.getCurrentl(typeTemp: self.degrePref, withLocation: location.coordinate, completion: { (results:[String : Any]?) in
+                    Weather.getCurrently(typeTemp: self.degrePref, withLocation: location.coordinate, completion: { (results:[String : Any]?) in
                         
                         // check if weather is here
                         if let weatherData = results {
