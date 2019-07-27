@@ -27,8 +27,6 @@ class WeatherTableViewController: UIViewController, UISearchBarDelegate, UITable
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("degre \(degre)")
-        
         closeButton.setTitle("Close", for: .normal)
         titleLabel.text = city.name
         summaryLabel.text = city.summary
@@ -89,11 +87,22 @@ class WeatherTableViewController: UIViewController, UISearchBarDelegate, UITable
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 
         let weatherObject = forecastData[indexPath.section]
-        
+        let temp = SwitchDegreType(obj: weatherObject)
         cell.textLabel?.text = weatherObject.summary
-        cell.detailTextLabel?.text = "\(Int(weatherObject.temperature)) °C"
+        cell.detailTextLabel?.text = "\(Int(temp)) \(degre)"
         cell.imageView?.image = UIImage.scaleImageToSize(img: UIImage(named: weatherObject.icon)!, size: CGSize(width: 35.0, height: 35.0))
         
         return cell
+    }
+    
+    func SwitchDegreType(obj: Weather)->Double {
+        if degre == "°F" {
+                let temp = Double(obj.temperature)
+                let newTemp = (temp * 1.8) + 32
+                //print("en °F \(newTemp) pour la ville de \(city.name)")
+                return newTemp
+        } else {
+              return obj.temperature
+        }
     }
 }
