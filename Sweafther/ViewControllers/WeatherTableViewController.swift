@@ -21,6 +21,7 @@ class WeatherTableViewController: UIViewController, UISearchBarDelegate, UITable
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var summaryLabel: UILabel!
     @IBOutlet weak var iconImage: UIImageView!
     @IBOutlet weak var tempLabel: UILabel!
@@ -53,6 +54,7 @@ class WeatherTableViewController: UIViewController, UISearchBarDelegate, UITable
                     Weather.forecast(withLocation: location.coordinate, completion: { (results:[Weather]?) in
                         if let weatherData = results {
                             self.forecastData = weatherData
+                            self.tableViewHeightConstraint.constant = CGFloat(weatherData.count * 44) + CGFloat(weatherData.count * 28)
                             
                             DispatchQueue.main.async {
                                 self.tableView.reloadData()

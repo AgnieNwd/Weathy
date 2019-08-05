@@ -41,7 +41,7 @@ struct Weather {
         
         let url = basePath + "\(location.latitude),\(location.longitude)?lang=en&units=si"
         let request = URLRequest(url: URL(string: url)!)
-        //print(url)
+        print(url)
 
         let task = URLSession.shared.dataTask(with: request) { (data:Data?, response:URLResponse?, error:Error?) in
             
