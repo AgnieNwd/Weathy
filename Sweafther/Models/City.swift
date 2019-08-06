@@ -79,27 +79,27 @@ class City: NSObject, NSCoding {
             return nil
         }
         guard let icon = aDecoder.decodeObject(forKey: PropertyKey.icon) as? String else {
-            os_log("Unable to decode the summary for a City object.", log: OSLog.default, type: .debug)
+            os_log("Unable to decode the icon for a City object.", log: OSLog.default, type: .debug)
             return nil
         }
         
         guard let humidity = aDecoder.decodeObject(forKey: PropertyKey.humidity) as? String else {
-            os_log("Unable to decode the icon for a City object.", log: OSLog.default, type: .debug)
+            os_log("Unable to decode the humidity for a City object.", log: OSLog.default, type: .debug)
             return nil
         }
         guard let pressure = aDecoder.decodeObject(forKey: PropertyKey.pressure) as? String else {
-            os_log("Unable to decode the icon for a City object.", log: OSLog.default, type: .debug)
+            os_log("Unable to decode the pressure for a City object.", log: OSLog.default, type: .debug)
             return nil
         }
         guard let windSpeed = aDecoder.decodeObject(forKey: PropertyKey.windSpeed) as? String else {
-            os_log("Unable to decode the icon for a City object.", log: OSLog.default, type: .debug)
+            os_log("Unable to decode the windSpeed for a City object.", log: OSLog.default, type: .debug)
             return nil
         }
 
 //        let temperature = aDecoder.decodeString(forKey: PropertyKey.temperature)
         
         // Must call designated initializer.
-        self.init(name: name, temperature: temperature, summary: summary, icon: icon, humidity:humidity, pressure:pressure, windSpeed:windSpeed)
+        self.init(name: name, temperature: temperature, summary: summary, icon: icon, humidity: humidity, pressure: pressure, windSpeed: windSpeed)
         
     }
 }
