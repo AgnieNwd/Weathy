@@ -26,6 +26,7 @@ class WeatherTableViewController: UIViewController, UISearchBarDelegate, UITable
     @IBOutlet weak var iconImage: UIImageView!
     @IBOutlet weak var tempLabel: UILabel!
     @IBOutlet var collectionView: UICollectionView!
+    @IBOutlet weak var InfosWing: UILabel!
     
     var degre: String = ""
     var city: City!
@@ -34,13 +35,12 @@ class WeatherTableViewController: UIViewController, UISearchBarDelegate, UITable
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         closeButton.setTitle("Close", for: .normal)
         titleLabel.text = city.name
         summaryLabel.text = city.summary
         iconImage.image = UIImage(named: city.icon)
         tempLabel.text = "\((city.temperature as NSString).integerValue) \(degre)"
-
+        InfosWing.text = "Wind Speed : \((city.windSpeed as NSString).doubleValue) mph humidity : \(city.humidity) % pressure : \(city.pressure) hPa"
         updateWeatherForLocation(location: city.name)
     }
     

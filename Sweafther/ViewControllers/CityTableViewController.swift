@@ -41,6 +41,7 @@ class CityTableViewController: UITableViewController {
         locationManager.startUpdatingLocation()
         
         degrePref = "°C"
+        
         navigationItem.leftBarButtonItem = editButtonItem
         
         timer = Timer.scheduledTimer(timeInterval: 120.0, target: self, selector: #selector(self.refreshEvery2Minutes), userInfo: nil, repeats: true)
@@ -60,9 +61,9 @@ class CityTableViewController: UITableViewController {
     
     private func loadSampleCities() {
         
-        let city1 = City(name: "Paris", temperature: "27", summary: "", icon: "wind")
-        let city2 = City(name: "New York", temperature: "33", summary: "", icon: "wind")
-        let city3 = City(name: "London", temperature: "25", summary: "", icon: "wind")
+        let city1 = City(name: "Paris", temperature: "27", summary: "", icon: "wind", humidity: "0.55", pressure: "5.55", windSpeed: "7")
+        let city2 = City(name: "New York", temperature: "33", summary: "", icon: "wind", humidity: "0.55", pressure: "5.55", windSpeed: "7")
+        let city3 = City(name: "London", temperature: "25", summary: "", icon: "wind", humidity: "0.55", pressure: "5.55", windSpeed: "7")
         
         cities += [city1, city2, city3]
     }
@@ -144,6 +145,8 @@ class CityTableViewController: UITableViewController {
                 viewController.city = selectedCity
             }
             viewController.degre = degrePref
+            
+            
             navigationController?.present(viewController, animated: true, completion: nil)
         }
     }
@@ -239,6 +242,10 @@ class CityTableViewController: UITableViewController {
                 self.locatedCity?.temperature = "\(Int(self.CurrentlyData["temperature"] as? Double ?? -1.0))"
                 self.locatedCity?.summary = "\(self.CurrentlyData["summary"] as? String ?? "void")"
                 self.locatedCity?.icon = "\(self.CurrentlyData["icon"] as? String ?? "wind")"
+                self.locatedCity?.humidity = "\(self.CurrentlyData["humidity"] as? Double ?? -1.0)"
+                self.locatedCity?.pressure = "\(self.CurrentlyData["pressure"] as? Double ?? -1.0)"
+                self.locatedCity?.windSpeed = "\(self.CurrentlyData["windSpeed"] as? Double ?? -1.0)"
+                
             })
         }
         for city in cities{
@@ -246,6 +253,9 @@ class CityTableViewController: UITableViewController {
                 city.temperature = "\(Int(self.CurrentlyData["temperature"] as? Double ?? -1.0))"
                 city.summary = "\(self.CurrentlyData["summary"] as? String ?? "void")"
                 city.icon = "\(self.CurrentlyData["icon"] as? String ?? "wind")"
+                city.humidity =  "\(self.CurrentlyData["humidity"] as? Double ?? -1.0)"
+                city.pressure =  "\(self.CurrentlyData["pressure"] as? Double ?? -1.0)"
+                city.windSpeed =  "\(self.CurrentlyData["windSpeed"] as? Double ?? -1.0)"
                 if self.cities.count - 1 == i
                 {
                     self.tableView.reloadData()
@@ -297,11 +307,13 @@ extension CityTableViewController: CLLocationManagerDelegate {
             print("actuellemnt à " + city + ", " + country)
             self.updateWeatherForLocation(location: city, completion: {
                 //print("le forcast de city table\(self.CurrentlyData)")
-
                 let temperature = "\(Int(self.CurrentlyData["temperature"] as? Double ?? -1.0))"
                 let summary = "\(self.CurrentlyData["summary"] as? String ?? "void")"
                 let icon = "\(self.CurrentlyData["icon"] as? String ?? "wind")"
-                self.locatedCity = City(name: "\(city) (you're here)", temperature: temperature, summary: summary, icon: icon)
+                let humidity = "\(self.CurrentlyData["humidity"] as? Double ?? -1.0)"
+                let pressure = "\(self.CurrentlyData["pressure"] as? Double ?? -1.0)"
+                let windSpeed = "\(self.CurrentlyData["windSpeed"] as? Double ?? -1.0)"
+                self.locatedCity = City(name: "\(city) (you're here)", temperature: temperature, summary: summary, icon: icon, humidity: humidity, pressure: pressure, windSpeed: windSpeed)
                 
                 self.tableView.reloadData()
             })
@@ -323,8 +335,11 @@ extension CityTableViewController: SearchCityTableViewDelegate {
                 let temperature = "\(Int(self.CurrentlyData["temperature"] as? Double ?? -1.0))"
                 let summary = "\(self.CurrentlyData["summary"] as? String ?? "void")"
                 let icon = "\(self.CurrentlyData["icon"] as? String ?? "wind")"
-                let newCity = City(name: newCity, temperature: temperature, summary: summary, icon: icon)
-                
+                let humidity =  "\(self.CurrentlyData["humidity"] as? Double ?? -1.0)"
+                let pressure =  "\(self.CurrentlyData["pressure"] as? Double ?? -1.0)"
+                let windSpeed =  "\(self.CurrentlyData["windSpeed"] as? Double ?? -1.0)"
+                let newCity = City(name: newCity, temperature: temperature, summary: summary, icon: icon, humidity: humidity, pressure: pressure, windSpeed: windSpeed)
+                print("<<>>>>>>>>>>>>>>>>new City \(newCity.humidity)")
                 self.cities.append(newCity)
                 self.tableView.reloadData()
                 //self.navigationController?.popViewController(animated: true)

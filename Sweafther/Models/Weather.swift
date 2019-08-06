@@ -100,17 +100,20 @@ struct Weather {
                 
                 do {
                     if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String:Any] {
-//                        print("json<<<<\(json)")
+                       // print("json<<<<\(json)")
                         
                         if let currentlyForecasts = json["currently"] as? [String:Any] {
-                            
+                           // print("json<<<<\(currentlyForecasts)")
                             forecastCurrent = [
                                 "time" : currentlyForecasts["time"]!,
                                 "temperature" : currentlyForecasts["temperature"]!,
                                 "summary" : currentlyForecasts["summary"]!,
-                                "icon" : currentlyForecasts["icon"]!
+                                "icon" : currentlyForecasts["icon"]!,
+                                "humidity" : currentlyForecasts["humidity"]!,
+                                "pressure" : currentlyForecasts["pressure"]!,
+                                "windSpeed" : currentlyForecasts["windSpeed"]!
                             ]
-//                            print("forecastCurrent<<<<\(forecastCurrent)")
+                           //print("forecastCurrent<<<<\(forecastCurrent)")
                         }
                     }
                 } catch {
@@ -170,7 +173,7 @@ struct Weather {
                                     hourlyForecastArray.append(weatherObject)
 
                                 }
-                                print("hourlyForecastArray<<<<\(hourlyForecastArray)")
+                               // print("hourlyForecastArray<<<<\(hourlyForecastArray)")
                                 
                             }
                         }

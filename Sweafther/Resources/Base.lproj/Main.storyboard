@@ -236,6 +236,7 @@
                         <viewLayoutGuide key="safeArea" id="ozA-et-agx"/>
                     </view>
                     <connections>
+                        <outlet property="InfosWing" destination="wXg-Na-ed4" id="Jj4-qk-V4Y"/>
                         <outlet property="closeButton" destination="OgQ-7I-koH" id="49W-Fo-knm"/>
                         <outlet property="collectionView" destination="VWa-nY-RCz" id="coP-GE-aEf"/>
                         <outlet property="iconImage" destination="030-l0-oUi" id="40u-af-1xb"/>
