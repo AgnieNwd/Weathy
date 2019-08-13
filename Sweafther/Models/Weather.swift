@@ -137,10 +137,6 @@ struct Weather {
         print(url)
         
         let task = URLSession.shared.dataTask(with: request) { (data:Data?, response:URLResponse?, error:Error?) in
-            
-//            var hourlyForecastArray: [String: Any] = [
-//                "data": []
-//            ]
 
             var hourlyForecastArray = [[String:Any]]()
             
@@ -165,11 +161,6 @@ struct Weather {
                                         "icon" : dataPoint["icon"]!
                                     ]
                                     
-//                                    var existingItems = hourlyForecastArray["data"] as? [[String: Any]] ?? [[String: Any]]()
-//                                    existingItems.append(weatherObject)
-//
-////                                    hourlyForecastArray += weatherObject
-//                                    hourlyForecastArray["data"] = existingItems
                                     hourlyForecastArray.append(weatherObject)
 
                                 }

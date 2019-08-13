@@ -23,8 +23,11 @@ class CityTableViewController: UITableViewController {
     let locationManager = CLLocationManager()
     var timer: Timer!
 
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        lunchLoader()
         
         if CLLocationManager.locationServicesEnabled() == true {
             if CLLocationManager.authorizationStatus() == .restricted ||
@@ -54,7 +57,9 @@ class CityTableViewController: UITableViewController {
             loadSampleCities()
         }
 
-        reloadCityData(completion:{})
+        reloadCityData(completion:{
+            self.hideLoader()
+        })
     }
     
     //MARK: Private Methods
@@ -96,11 +101,14 @@ class CityTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell City", for: indexPath)
         
+        // First cell of table view, if locatedCity exist
         if indexPath.row == 0, let locatedCity = locatedCity {
             cell.textLabel?.text = locatedCity.name
             cell.detailTextLabel?.text = "\((locatedCity.temperature as NSString).integerValue) \(degrePref)"
             cell.imageView?.image = UIImage.scaleImageToSize(img: UIImage(named: locatedCity.icon) ?? UIImage(named: "rain")!, size: CGSize(width: 40.0, height: 40.0))
-        } else {
+        }
+        // Others cells of table view which contents an array of fav cities
+        else {
             let index = indexPath.row - (locatedCity != nil ? 1 : 0)
             let cityObject = cities[index]
             
@@ -108,6 +116,7 @@ class CityTableViewController: UITableViewController {
             cell.detailTextLabel?.text = "\((cityObject.temperature as NSString).integerValue) \(degrePref)"
             cell.imageView?.image = UIImage.scaleImageToSize(img: UIImage(named: cityObject.icon) ?? UIImage(named: "rain")!, size: CGSize(width: 40.0, height: 40.0))
         }
+        
         return cell
     }
     
@@ -127,15 +136,14 @@ class CityTableViewController: UITableViewController {
             saveCities()
             tableView.deleteRows(at: [indexPath], with: .fade)
 
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }
     }
     
     // MARK: - UITableViewDelegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        // On select city :
         if let viewController = storyboard.instantiateViewController(withIdentifier: "WeatherTableViewController") as? WeatherTableViewController {
             if indexPath.row == 0, let locatedCity = locatedCity {
                 viewController.city = locatedCity
@@ -146,7 +154,6 @@ class CityTableViewController: UITableViewController {
             }
             viewController.degre = degrePref
             
-            
             navigationController?.present(viewController, animated: true, completion: nil)
         }
     }
@@ -155,7 +162,6 @@ class CityTableViewController: UITableViewController {
         CLGeocoder().geocodeAddressString(location) { (placemarks:[CLPlacemark]?, error:Error?) in
             if error == nil {
                 if let location = placemarks?.first?.location {
-                    //Weather.forecast(withLocation: location.coordinate, completion: { (results:[Weather]?) in
                     Weather.getCurrently(typeTemp: self.degrePref, withLocation: location.coordinate, completion: { (results:[String : Any]?) in
                         
                         // check if weather is here
@@ -171,35 +177,7 @@ class CityTableViewController: UITableViewController {
             }
         }
     }
-    func SwitchDegreType() {
-       if degrePref == "°F" {
-            for city in self.cities {
-                let temp = Double(city.temperature)
-                let newTemp = (temp! * 1.8) + 32
-                //print("en °F \(newTemp) pour la ville de \(city.name)")
-                city.temperature = String(newTemp)
-            }
-            if locatedCity != nil {
-                let temp = Double(locatedCity!.temperature)
-                let newTemp = (temp! * 1.8) + 32
-                //print("en °F \(newTemp) pour la ville de \(locatedCity!.name)")
-                locatedCity!.temperature = String(newTemp)
-            }
-        } else {
-            for city in self.cities {
-                let temp = Double(city.temperature)
-                let newTemp = (temp! - 32) / 1.8
-                //print("en °F \(newTemp) pour la ville de \(city.name)")
-                city.temperature = String(newTemp)
-            }
-            if locatedCity != nil {
-                let temp = Double(locatedCity!.temperature)
-                let newTemp = (temp! - 32) / 1.8
-                //print("en °C \(newTemp) pour la ville de \(locatedCity!.name)")
-                locatedCity!.temperature = String(newTemp)
-            }
-        }
-    }
+    
     
     // MARK: - Navigation
 
@@ -230,10 +208,34 @@ class CityTableViewController: UITableViewController {
         }
 
         SwitchDegreType()
-        //reloadCityData()
         tableView.reloadData()
     }
     
+    func SwitchDegreType() {
+        if degrePref == "°F" {
+            for city in self.cities {
+                let temp = Double(city.temperature)
+                let newTemp = (temp! * 1.8) + 32
+                city.temperature = String(newTemp)
+            }
+            if locatedCity != nil {
+                let temp = Double(locatedCity!.temperature)
+                let newTemp = (temp! * 1.8) + 32
+                locatedCity!.temperature = String(newTemp)
+            }
+        } else {
+            for city in self.cities {
+                let temp = Double(city.temperature)
+                let newTemp = (temp! - 32) / 1.8
+                city.temperature = String(newTemp)
+            }
+            if locatedCity != nil {
+                let temp = Double(locatedCity!.temperature)
+                let newTemp = (temp! - 32) / 1.8
+                locatedCity!.temperature = String(newTemp)
+            }
+        }
+    }
     
     func reloadCityData(completion: @escaping () -> ()) {
         var i = 0
@@ -277,8 +279,29 @@ class CityTableViewController: UITableViewController {
         return false
     }
     
-    // MARK: - Refresh
+    // MARK: - Loader
+    func lunchLoader() {
+        print("loadeer")
+
+        //activityIndicator.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
+        activityIndicator.center = self.view.center
+        activityIndicator.backgroundColor = (UIColor (white: 0.3, alpha: 0.1))
+        activityIndicator.style = UIActivityIndicatorView.Style.whiteLarge
+        activityIndicator.layer.cornerRadius = 10
+        
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.startAnimating()
+    }
     
+    func hideLoader() {
+        DispatchQueue.main.async {
+            //self.activityIndicator.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
+            self.activityIndicator.stopAnimating()
+        }
+
+    }
+    
+    // MARK: - Refresh
     @IBAction func refreshCityData(_ sender: UIRefreshControl) {
         reloadCityData(completion: {
             print("refresh")
@@ -300,7 +323,6 @@ class CityTableViewController: UITableViewController {
 extension CityTableViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location = locations[0]
-        print(location)
         
         fetchCityAndCountry(from: location) { city, country, error  in
             guard let city = city, let country = country, error == nil else { return }
@@ -313,7 +335,7 @@ extension CityTableViewController: CLLocationManagerDelegate {
                 let humidity = "\(self.CurrentlyData["humidity"] as? Double ?? -1.0)"
                 let pressure = "\(self.CurrentlyData["pressure"] as? Double ?? -1.0)"
                 let windSpeed = "\(self.CurrentlyData["windSpeed"] as? Double ?? -1.0)"
-                self.locatedCity = City(name: "\(city) (you're here)", temperature: temperature, summary: summary, icon: icon, humidity: humidity, pressure: pressure, windSpeed: windSpeed)
+                self.locatedCity = City(name: "\(city) 📍", temperature: temperature, summary: summary, icon: icon, humidity: humidity, pressure: pressure, windSpeed: windSpeed)
                 
                 self.tableView.reloadData()
             })
@@ -326,12 +348,11 @@ extension CityTableViewController: CLLocationManagerDelegate {
 }
 
 extension CityTableViewController: SearchCityTableViewDelegate {
+    // On select new city
     func didSelectedNewCity(_ newCity: String) {
-//        print(newCity)
         let ifCtity = checkCities(newCity: newCity)
         if !ifCtity {
             updateWeatherForLocation(location: newCity, completion: {
-                //print("le forcast de city table\(self.CurrentlyData)")
                 let temperature = "\(Int(self.CurrentlyData["temperature"] as? Double ?? -1.0))"
                 let summary = "\(self.CurrentlyData["summary"] as? String ?? "void")"
                 let icon = "\(self.CurrentlyData["icon"] as? String ?? "wind")"
@@ -339,10 +360,8 @@ extension CityTableViewController: SearchCityTableViewDelegate {
                 let pressure =  "\(self.CurrentlyData["pressure"] as? Double ?? -1.0)"
                 let windSpeed =  "\(self.CurrentlyData["windSpeed"] as? Double ?? -1.0)"
                 let newCity = City(name: newCity, temperature: temperature, summary: summary, icon: icon, humidity: humidity, pressure: pressure, windSpeed: windSpeed)
-                print("<<>>>>>>>>>>>>>>>>new City \(newCity.humidity)")
                 self.cities.append(newCity)
                 self.tableView.reloadData()
-                //self.navigationController?.popViewController(animated: true)
                 self.saveCities()
             })
         }
