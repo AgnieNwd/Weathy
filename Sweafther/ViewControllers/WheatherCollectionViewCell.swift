@@ -13,4 +13,10 @@ class WheatherCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var hourlyLabel: UILabel!
     @IBOutlet weak var hourlyIconImage: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
+    
+    func setup(hourly: String, icon: UIImage?, temperature: Int) {
+        hourlyLabel.text = hourly
+        hourlyIconImage.image = icon
+        temperatureLabel.text = "\(temperature)°"
+    }
 }

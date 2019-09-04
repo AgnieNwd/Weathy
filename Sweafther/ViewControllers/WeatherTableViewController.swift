@@ -21,17 +21,24 @@ class WeatherTableViewController: UIViewController, UISearchBarDelegate, UITable
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
     
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var tableViewHeightConstraint: NSLayoutConstraint!
-    
+    // Principal info of the day
     @IBOutlet weak var summaryLabel: UILabel!
     @IBOutlet weak var iconImage: UIImageView!
     @IBOutlet weak var tempLabel: UILabel!
     
+    // Hourly detail
     @IBOutlet var collectionView: UICollectionView!
     
-    @IBOutlet weak var InfosWing: UILabel!
+    // Daily detail
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableViewHeightConstraint: NSLayoutConstraint!
     
+    // Label detail
+    @IBOutlet weak var infoWind: UILabel!
+    @IBOutlet weak var infoHumidity: UILabel!
+    @IBOutlet weak var infoPressure: UILabel!
+    
+    // Loader
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     var degre: String = ""
@@ -44,14 +51,24 @@ class WeatherTableViewController: UIViewController, UISearchBarDelegate, UITable
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        lunchLoader()
+        launchLoader()
         
         closeButton.setTitle("Close", for: .normal)
         titleLabel.text = city.name
+        
         summaryLabel.text = city.summary
         iconImage.image = UIImage(named: city.icon)
         tempLabel.text = "\((city.temperature as NSString).integerValue) \(degre)"
-        InfosWing.text = "Wind Speed : \((city.windSpeed as NSString).doubleValue) mph humidity : \(city.humidity) % pressure : \(city.pressure) hPa"
+        
+        infoWind.text = "\((city.windSpeed as NSString).doubleValue) mph"
+        infoWind.numberOfLines = 0
+        
+        infoHumidity.text = "\((city.humidity as NSString).doubleValue * 100) %"
+        infoHumidity.numberOfLines = 0
+        
+        infoPressure.text = "\((city.pressure as NSString).integerValue) hPa"
+        infoPressure.numberOfLines = 0
+        
         updateWeatherForLocation(location: city.name, completion:{
             self.hideLoader()
         })
@@ -67,9 +84,9 @@ class WeatherTableViewController: UIViewController, UISearchBarDelegate, UITable
                     Weather.forecast(withLocation: location.coordinate, completion: { (results:[Weather]?) in
                         if let weatherData = results {
                             self.forecastData = weatherData
-                            self.tableViewHeightConstraint.constant = CGFloat(weatherData.count * 44) + CGFloat(weatherData.count * 28)
                             
                             DispatchQueue.main.async {
+                                self.tableViewHeightConstraint.constant = CGFloat(weatherData.count * 70) + CGFloat(weatherData.count * 20)
                                 self.tableView.reloadData()
                             }
                         }
@@ -96,7 +113,7 @@ class WeatherTableViewController: UIViewController, UISearchBarDelegate, UITable
         dismiss(animated: true, completion: nil)
     }
     
-    func lunchLoader() {
+    func launchLoader() {
         print("loadeer")
         self.view.viewWithTag(1)?.isHidden = true
 
@@ -138,7 +155,7 @@ class WeatherTableViewController: UIViewController, UISearchBarDelegate, UITable
 
         // Cells of table view (daily)
         let weatherObject = forecastData[indexPath.section]
-        let temp = SwitchDegreType(obj: weatherObject.temperature)
+        let temp = switchDegreType(obj: weatherObject.temperature)
         cell.textLabel?.text = weatherObject.summary
         cell.detailTextLabel?.text = "\(Int(temp)) \(degre)"
         cell.imageView?.image = UIImage.scaleImageToSize(img: UIImage(named: weatherObject.icon)!, size: CGSize(width: 35.0, height: 35.0))
@@ -146,7 +163,7 @@ class WeatherTableViewController: UIViewController, UISearchBarDelegate, UITable
         return cell
     }
     
-    func SwitchDegreType(obj: Double)->Double {
+    func switchDegreType(obj: Double)->Double {
         if degre == "°F" {
                 let temp = Double(obj)
                 let newTemp = (temp * 1.8) + 32
@@ -167,22 +184,20 @@ extension WeatherTableViewController: UICollectionViewDataSource, UICollectionVi
 
         // First cell of collection view (hourly)
         if indexPath.row == 0 {
-            cell.hourlyLabel.text = "Now"
-            cell.hourlyIconImage.image = UIImage(named: city.icon)
-            cell.temperatureLabel.text = "\((city.temperature as NSString).integerValue)°"
+            cell.setup(hourly: "Now", icon: UIImage(named: city.icon), temperature: (city.temperature as NSString).integerValue)
         }
         // Others cells from "now"
         else {
             let weatherObject = hourlyForecastData[indexPath.row]
-            let temp = SwitchDegreType(obj: weatherObject["temperature"] as! Double)
+            let temp = switchDegreType(obj: weatherObject["temperature"] as! Double)
             let date = NSDate(timeIntervalSince1970: weatherObject["time"] as! TimeInterval)
 
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "HH"
-
-            cell.hourlyLabel.text = "\(dateFormatter.string(from: date as Date))H"
-            cell.hourlyIconImage.image = UIImage(named: "\(weatherObject["icon"]!)")
-            cell.temperatureLabel.text = "\(Int(temp))°"
+            
+            cell.setup(hourly: "\(dateFormatter.string(from: date as Date))H",
+                icon: UIImage(named: "\(weatherObject["icon"]!)"),
+                temperature: Int(temp))
         }
         
         return cell
