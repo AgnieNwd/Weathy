@@ -35,8 +35,11 @@ class WeatherTableViewController: UIViewController, UISearchBarDelegate, UITable
     
     // Label detail
     @IBOutlet weak var infoWind: UILabel!
+    @IBOutlet weak var infoTempMaxMin: UILabel!
     @IBOutlet weak var infoHumidity: UILabel!
     @IBOutlet weak var infoPressure: UILabel!
+    @IBOutlet weak var infoUvIndice: UILabel!
+    @IBOutlet weak var infoVisibility: UILabel!
     
     // Loader
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -58,18 +61,24 @@ class WeatherTableViewController: UIViewController, UISearchBarDelegate, UITable
         
         summaryLabel.text = city.summary
         iconImage.image = UIImage(named: city.icon)
-        tempLabel.text = "\((city.temperature as NSString).integerValue) \(degre)"
+        tempLabel.text = "\((city.temperature as NSString).integerValue)°"
         
         infoWind.text = "\((city.windSpeed as NSString).doubleValue) mph"
         infoWind.numberOfLines = 0
         
-        infoHumidity.text = "\((city.humidity as NSString).doubleValue * 100) %"
+        print("humidity \(city.humidity)")
+        infoHumidity.text = "\(Int((city.humidity as NSString).doubleValue * 100)) %"
         infoHumidity.numberOfLines = 0
         
         infoPressure.text = "\((city.pressure as NSString).integerValue) hPa"
         infoPressure.numberOfLines = 0
         
         updateWeatherForLocation(location: city.name, completion:{
+            let tempMax = self.switchDegreType(obj: self.forecastData[0].temperatureMax)
+            let tempMin = self.switchDegreType(obj: self.forecastData[0].temperatureMin)
+            self.infoTempMaxMin.text = "\(Int(tempMax))° / \(Int(tempMin))°"
+            self.infoUvIndice.text = "\(self.forecastData[0].uvIndex)"
+            self.infoVisibility.text = "\(self.forecastData[0].visibility)"
             self.hideLoader()
         })
     }
@@ -155,9 +164,10 @@ class WeatherTableViewController: UIViewController, UISearchBarDelegate, UITable
 
         // Cells of table view (daily)
         let weatherObject = forecastData[indexPath.section]
-        let temp = switchDegreType(obj: weatherObject.temperature)
+        let tempMax = switchDegreType(obj: weatherObject.temperatureMax)
+        let tempMin = switchDegreType(obj: weatherObject.temperatureMin)
         cell.textLabel?.text = weatherObject.summary
-        cell.detailTextLabel?.text = "\(Int(temp)) \(degre)"
+        cell.detailTextLabel?.text = "\(Int(tempMax))\(degre) / \(Int(tempMin))\(degre)"
         cell.imageView?.image = UIImage.scaleImageToSize(img: UIImage(named: weatherObject.icon)!, size: CGSize(width: 35.0, height: 35.0))
         
         return cell
