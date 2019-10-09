@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00FCF4BF22DF150E00E4B764 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00FCF4BE22DF150E00E4B764 /* CoreLocation.framework */; };
+		740DCB6822EB21AE0099A47C /* WheatherCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740DCB6722EB21AE0099A47C /* WheatherCollectionViewCell.swift */; };
 		7474852222D3B0B600C0916F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7474852122D3B0B600C0916F /* AppDelegate.swift */; };
 		7474853722D3B0B700C0916F /* SweaftherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7474853622D3B0B700C0916F /* SweaftherTests.swift */; };
 		7474854222D3B0B700C0916F /* SweaftherUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7474854122D3B0B700C0916F /* SweaftherUITests.swift */; };
@@ -39,6 +41,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		00FCF4BE22DF150E00E4B764 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		740DCB6722EB21AE0099A47C /* WheatherCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheatherCollectionViewCell.swift; sourceTree = "<group>"; };
 		7474851E22D3B0B600C0916F /* Sweafther.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sweafther.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7474852122D3B0B600C0916F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7474853222D3B0B700C0916F /* SweaftherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SweaftherTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -64,6 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				00FCF4BF22DF150E00E4B764 /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,6 +89,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		00FCF4BD22DF150E00E4B764 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				00FCF4BE22DF150E00E4B764 /* CoreLocation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		7474851522D3B0B600C0916F = {
 			isa = PBXGroup;
 			children = (
@@ -91,6 +104,7 @@
 				7474853522D3B0B700C0916F /* SweaftherTests */,
 				7474854022D3B0B700C0916F /* SweaftherUITests */,
 				7474851F22D3B0B600C0916F /* Products */,
+				00FCF4BD22DF150E00E4B764 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -140,6 +154,7 @@
 				74B5294222D4D86100A78302 /* CityTableViewController.swift */,
 				74B5294622D5EC8F00A78302 /* SearchCityViewController.swift */,
 				7474854F22D3B27300C0916F /* WeatherTableViewController.swift */,
+				740DCB6722EB21AE0099A47C /* WheatherCollectionViewCell.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -307,6 +322,7 @@
 				74EC02CC22DB393E00BC37D8 /* City.swift in Sources */,
 				7474855022D3B27300C0916F /* WeatherTableViewController.swift in Sources */,
 				74EC02D222DB39DA00BC37D8 /* CityTableViewController.swift in Sources */,
+				740DCB6822EB21AE0099A47C /* WheatherCollectionViewCell.swift in Sources */,
 				74B5294722D5EC8F00A78302 /* SearchCityViewController.swift in Sources */,
 				7474852222D3B0B600C0916F /* AppDelegate.swift in Sources */,
 				74EC02CD22DB393E00BC37D8 /* Weather.swift in Sources */,
@@ -399,6 +415,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "niewia_a juzain_d ";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -415,7 +432,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -460,6 +477,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "niewia_a juzain_d ";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -470,7 +488,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -485,6 +503,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6LY75M9223;
 				INFOPLIST_FILE = "$(SRCROOT)/Sweafther/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -502,6 +521,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6LY75M9223;
 				INFOPLIST_FILE = "$(SRCROOT)/Sweafther/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

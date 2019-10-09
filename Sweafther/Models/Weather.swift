@@ -13,7 +13,10 @@ import CoreLocation
 struct Weather {
     let summary:String
     let icon:String
-    let temperature:Double
+    let temperatureMax:Double
+    let temperatureMin:Double
+    let uvIndex:Int
+    let visibility:Double
     
     enum SerializationError:Error {
         case missing(String)
@@ -26,12 +29,21 @@ struct Weather {
         
         guard let icon = json["icon"] as? String else {throw SerializationError.missing("icon is missing")}
         
-        guard let temperature = json["temperatureMax"] as? Double else {throw SerializationError.missing("temp is missing")}
+        guard let temperatureMax = json["temperatureMax"] as? Double else {throw SerializationError.missing("tempMax is missing")}
         
+        guard let temperatureMin = json["temperatureMin"] as? Double else {throw SerializationError.missing("tempMin is missing")}
+        
+        guard let uvIndex = json["uvIndex"] as? Int else {throw SerializationError.missing("uvIndex is missing")}
+
+        guard let visibility = json["visibility"] as? Double else {throw SerializationError.missing("visibility is missing")}
+
         self.summary = summary
         self.icon = icon
-        self.temperature = temperature
-        
+        self.temperatureMax = temperatureMax
+        self.temperatureMin = temperatureMin
+        self.uvIndex = uvIndex
+        self.visibility = visibility
+
     }
     
     
@@ -66,17 +78,15 @@ struct Weather {
                                     }
                                 }
 //                                print("forecastArray<<<<\(forecastArray)")
-
                             }
                         }
                         
                     }
-                }catch {
+                } catch {
                     print(error.localizedDescription)
                 }
                 
                 completion(forecastArray)
-                
             }
             
             
@@ -86,13 +96,13 @@ struct Weather {
         
     }
     
-    static func getCurrentl(typeTemp: String, withLocation location:CLLocationCoordinate2D, completion: @escaping ([String : Any]?) -> ()) {
+    static func getCurrently(typeTemp: String, withLocation location:CLLocationCoordinate2D, completion: @escaping ([String : Any]?) -> ()) {
         var url = basePath + "\(location.latitude),\(location.longitude)?lang=en"
         if typeTemp == "°C" {
             url = url + "&units=si"
         }
         let request = URLRequest(url: URL(string: url)!)
-        print(url)
+        //print(url)
         
         let task = URLSession.shared.dataTask(with: request) { (data:Data?, response:URLResponse?, error:Error?) in
             
@@ -102,33 +112,81 @@ struct Weather {
                 
                 do {
                     if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String:Any] {
-                        //print("json<<<<\(json)")
+                       // print("json<<<<\(json)")
                         
                         if let currentlyForecasts = json["currently"] as? [String:Any] {
-                            print("currentlyForecasts<<<<\(currentlyForecasts)")
-                            
-                            //for Cuurent in currentlyForecasts
+                           // print("json<<<<\(currentlyForecasts)")
                             forecastCurrent = [
                                 "time" : currentlyForecasts["time"]!,
                                 "temperature" : currentlyForecasts["temperature"]!,
-                                "icon" : currentlyForecasts["icon"]!
+                                "summary" : currentlyForecasts["summary"]!,
+                                "icon" : currentlyForecasts["icon"]!,
+                                "humidity" : currentlyForecasts["humidity"]!,
+                                "pressure" : currentlyForecasts["pressure"]!,
+                                "windSpeed" : currentlyForecasts["windSpeed"]!
                             ]
-                            
-                            print("forecastCurrent<<<<\(forecastCurrent)")
-                            
-                            
+                           //print("forecastCurrent<<<<\(forecastCurrent)")
                         }
-                        
                     }
                 } catch {
                     print(error.localizedDescription)
                 }
                 
                 completion(forecastCurrent)
-                
+
             }
+        }
+        
+        task.resume()
+    }
+    
+    static func getHourlyData(typeTemp: String, withLocation location:CLLocationCoordinate2D, completion: @escaping ([[String:Any]]?) -> ()) {
+        var url = basePath + "\(location.latitude),\(location.longitude)?lang=en"
+        if typeTemp == "°C" {
+            url = url + "&units=si"
+        }
+        let request = URLRequest(url: URL(string: url)!)
+        print(url)
+        
+        let task = URLSession.shared.dataTask(with: request) { (data:Data?, response:URLResponse?, error:Error?) in
+
+            var hourlyForecastArray = [[String:Any]]()
             
-            
+            if let data = data {
+                
+                do {
+                    if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String:Any] {
+                        
+                        if let hourleyForecasts = json["hourly"] as? [String:Any] {
+//                            print("hourleyForecasts<<<<\(hourleyForecasts)")
+
+                            if let hourlyData = hourleyForecasts["data"] as? [[String:Any]] {
+//                                print("hourlyData<<<<\(hourlyData)")
+
+                                for dataPoint in hourlyData {
+//                                    print("dataPoint<<<<\(dataPoint)")
+
+                                    let weatherObject: [String: Any] = [
+                                        "time" : dataPoint["time"]!,
+                                        "temperature" : dataPoint["temperature"]!,
+                                        "summary" : dataPoint["summary"]!,
+                                        "icon" : dataPoint["icon"]!
+                                    ]
+                                    
+                                    hourlyForecastArray.append(weatherObject)
+
+                                }
+                               // print("hourlyForecastArray<<<<\(hourlyForecastArray)")
+                                
+                            }
+                        }
+                        
+                    }
+                } catch {
+                    print(error.localizedDescription)
+                }
+                completion(hourlyForecastArray)
+            }
         }
         
         task.resume()
